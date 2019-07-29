@@ -1,0 +1,55 @@
+extends layout
+
+block content
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    .d-sm-flex.align-items-center.justify-content-between.mb-4
+      h1.h3.mb-0.text-gray-800 
+    // Content Row
+    .row
+      // Content Column
+      .col-lg-12.mb-4
+        // DataTales Example
+        .card.shadow.mb-4
+          .card-header.py-3
+            h6.m-0.font-weight-bold.text-primary #{title} Info
+          .card-body
+            .table-responsive
+              table#dataTable.table.table-bordered(width='100%', cellspacing='15')
+                thead
+                  tr
+                    th Site Name
+                      th Address
+                      th City
+                      th County
+                      th Postcode
+                      th Country
+                      th Contact
+                      th Status
+                tbody
+                  each site, i in sites
+                    if user
+                      if user.company == site.company || user.admin == "Super Admin"
+                        tr.odd.gradeX
+                          td
+                            a(href="/sites/"+site._id)=site.name
+                          td
+                            = site.address
+                          td
+                            = site.city
+                          td
+                            = site.county
+                          td
+                            = site.postcode
+                          td
+                            = site.country
+                          td
+                            = site.phonenumber
+                          td
+                            if site.status == "Active"
+                              span.label.label-success #{site.status}
+                            else
+                              span.label.label-danger #{site.status} 
+  // /.container-fluid
+  // End of Main Content

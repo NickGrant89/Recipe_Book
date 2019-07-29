@@ -1,0 +1,86 @@
+extends layout
+
+block content
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    .d-sm-flex.align-items-center.justify-content-between.mb-4
+      h1.h3.mb-0.text-gray-800 
+      a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='#editUser', data-toggle='modal', data-target='#editUser')
+        i.fas.fa-download.fa-sm.text-white-50
+        |  Edit User  
+    // Content Row
+    .row
+      // Content Column
+      .col-lg-12.mb-4
+        // DataTales Example
+        .card.shadow.mb-4
+          .card-header.py-3
+            h6.m-0.font-weight-bold.text-primary #{title} Info
+          .card-body
+            .table-responsive
+              table#dataTable.table.table-bordered(width='100%', cellspacing='15')
+                thead
+                  tr
+                    th Name
+                    th Username
+                    th Email
+                    th Phone
+                    th Company
+                    th Admin
+                tbody
+                  tr.odd.gradeX
+                    td
+                      = user.name
+                    td
+                      = user.username
+                    td
+                      = user.email
+                    td
+                      = user.phone
+                    td
+                      = user.company
+                    td
+                      = user.admin  
+  // /.container-fluid
+  // End of Main Content
+  #editUser.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editUserLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                h5#editUserLabel.modal-title Edit User
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true')
+            .modal-body
+                form(method='POST', action='/users/edit/'+user.id enctype="multipart/form-data")
+                    #form-group
+                        label Role:
+                        select.form-control(name='admin', type='text')
+                            option(value='User' selected=userRole) User
+                            option(value='Admin' selected=adminRole) Admin
+                                if user
+                                    if user.admin == "Super Admin"
+                                        option(value='Super Admin') Super Admin 
+                    #form-group
+                        label Name:
+                        input.form-control(name='name', type='text', value=user.name)
+                        input.form-control(type='file', name='userImage' value=user.userImage)
+                    #form-group
+                        label Email:
+                        input.form-control(name='email', type='text', value=user.email)
+                    #form-group
+                        label Phone:
+                        input.form-control(name='phone', type='text' value=user.phone)
+                    #form-group
+                        label Sites:
+                          .boxes
+                            each site, i in sites 
+                              .checkbox    
+                                label 
+                                  input(name='sites', type='checkbox', value=site.name, checked=check[i])  
+                                  = site.name 
+                    br      
+                                  
+                                                                          
+                    input.btn.btn-primary(type='submit', value='Submit')
+                    a.btn.btn-danger(href='/users/'+user._id) Cancel 

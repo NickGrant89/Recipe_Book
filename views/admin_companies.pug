@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  // Begin Page Content
+  .container-fluid
+    // Page Heading
+    .d-sm-flex.align-items-center.justify-content-between.mb-4
+      h1.h3.mb-0.text-gray-800
+      a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='#')
+        i.fas.fa-download.fa-sm.text-white-50
+        |  Generate Report
+    // Content Row
+    .row
+      // Content Column
+      .col-lg-12.mb-4
+        // DataTales Example
+        .card.shadow.mb-4
+          .card-header.py-3
+            h6.m-0.font-weight-bold.text-primary #{title} Info
+          .card-body
+            .table-responsive
+              table#dataTable.table.table-bordered(width='100%', cellspacing='15')
+                thead
+                  tr
+                    th Company
+                    th Address
+                    th City
+                    th Postcode
+                    th Email
+                tbody
+                  each company, i in companies
+                    if user
+                      if user.company == company.name || user.admin == "Super Admin"
+                        tr.odd.gradeX
+                          td
+                            a(href="/companies/"+company._id)=company.name
+                          td
+                            = company.address
+                          td
+                            = company.city
+                          td
+                            = company.postcode
+                          td
+                            = company.email
+  // /.container-fluid
+  // End of Main Content
