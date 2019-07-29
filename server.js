@@ -24,8 +24,6 @@ let User = require('./models/user');
 
 let Company = require('./models/company');
 
-let Device = require('./models/device');
-
 // Call Moongoose connection
 const mongoose = require('mongoose');
 mongoose.connect(config.database,{ useNewUrlParser: true });
@@ -126,7 +124,7 @@ app.get('/', ensureAuthenticated, function(req, res){
             Company.countDocuments({'name':user.company}, function(err, numOfCompanies) {
                 Site.countDocuments({'name': user.sites}, function(err, numOfSites) {
                     User.countDocuments({'company': user.company}, function(err, numOfUsers) {
-                        Device.countDocuments({'site': user.sites, 'status':'Active'}, function(err, numOfDevices) {
+                       
                             if(err){
                                 console.log(err)
                             }
@@ -139,7 +137,7 @@ app.get('/', ensureAuthenticated, function(req, res){
                                     numOfCompanies: numOfCompanies,
                                     numOfSites: numOfSites,
                                     numOfUsers:numOfUsers,
-                                    numOfDevices:numOfDevices,
+            
                                 });
                             }
                         });        
@@ -150,24 +148,17 @@ app.get('/', ensureAuthenticated, function(req, res){
     });
 });
 });
-});
 
 // Route File
 
-let devices = require('./routes/devices');
 let users = require('./routes/users');
 let jwt = require('./routes/apiJWT');
-let apiFileTf = require('./routes/apiFileTransfer');
-let apiDevices = require('./routes/apiDevices');
 let apiCompany = require('./routes/apiCompany');
 let companies = require('./routes/companies');
 let site = require('./routes/sites');
 let admin = require('./routes/admin');
 
-app.use('/devices', devices);
 app.use('/users', users);
-app.use('/api/v1/filetransfer/', apiFileTf);
-app.use('/api/v1/devices/', apiDevices);
 app.use('/api/v1/company/', apiCompany);
 app.use('/api/v1/auth/', jwt);
 app.use('/companies', companies);

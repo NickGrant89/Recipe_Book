@@ -6,8 +6,6 @@ const ensureAuthenticated = require('../middleware/login-auth');
 //User Model
 let Site = require('../models/site');
 
-let Device = require('../models/device');
-
 let Company = require('../models/company');
 
 let User = require('../models/user');

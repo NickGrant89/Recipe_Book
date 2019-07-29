@@ -10,8 +10,6 @@ let Company = require('../models/company');
 
 let Site = require('../models/site');
 
-let Device = require('../models/device');
-
 let User = require('../models/user');
 
 

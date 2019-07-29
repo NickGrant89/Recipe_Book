@@ -4,7 +4,6 @@ const router = express.Router();
 //Access Control
 const ensureAuthenticated = require('../middleware/login-auth');
 
-let Device = require('../models/device');
 
 let User = require('../models/user');
 

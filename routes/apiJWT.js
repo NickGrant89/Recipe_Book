@@ -12,8 +12,6 @@ const morgan = require('morgan');
 //Bring in Users Model
 let User = require('../models/user');
 
-let DeviceSu = require('../models/deviceSignUp');
-
 
 router.get('/helloworld', checkAuth, (req, res) => {
     res.json({

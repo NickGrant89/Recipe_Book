@@ -1,212 +1,85 @@
-doctype html
-html(lang='en')
-  head
-    //
-      Basic meta info
-      ====================
-    meta(charset='utf-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    title Recipe Book
-    //
-      Favicon
-      ============
-    link(rel='apple-touch-icon', sizes='57x57', href='images/favicon/apple-icon-57x57.png')
-    link(rel='apple-touch-icon', sizes='60x60', href='images/favicon/apple-icon-60x60.png')
-    link(rel='apple-touch-icon', sizes='72x72', href='images/favicon/apple-icon-72x72.png')
-    link(rel='apple-touch-icon', sizes='76x76', href='images/favicon/apple-icon-76x76.png')
-    link(rel='apple-touch-icon', sizes='114x114', href='images/favicon/apple-icon-114x114.png')
-    link(rel='apple-touch-icon', sizes='120x120', href='images/favicon/apple-icon-120x120.png')
-    link(rel='apple-touch-icon', sizes='144x144', href='images/favicon/apple-icon-144x144.png')
-    link(rel='apple-touch-icon', sizes='152x152', href='images/favicon/apple-icon-152x152.png')
-    link(rel='apple-touch-icon', sizes='180x180', href='images/favicon/apple-icon-180x180.png')
-    link(rel='icon', type='image/png', sizes='192x192', href='images/favicon/android-icon-192x192.png')
-    link(rel='icon', type='image/png', sizes='16x16', href='images/favicon/favicon-16x16.png')
-    link(rel='icon', type='image/png', sizes='32x32', href='images/favicon/favicon-32x32.png')
-    link(rel='icon', type='image/png', sizes='96x96', href='images/favicon/favicon-96x96.png')
-    //
-      CSS files
-      ==============
-    link(rel='stylesheet', type='text/css', href='css/reset.css')
-    link(rel='stylesheet', type='text/css', href='css/bootstrap.min.css')
-    link(rel='stylesheet', type='text/css', href='css/font-awesome.min.css')
-    link(rel='stylesheet', type='text/css', href='css/animate.min.css')
-    link(rel='stylesheet', type='text/css', href='css/styles.css')
-    //
-      Modernizr file
-      ===================
-    script(charset='utf-8', type='text/javascript ', src='js/modernizr.custom.js')
-  body
-    //
-      Splash Screen
-      ==================
-    #splash
-    //
-      Website Logo
-      =================
-    section#logo
-      .container.text-center.wow.pulse
-        img(src='images/logo-white.svg', alt='logo')
-        br
-        h1 Recipe Book
-    //
-      Recipes Categories
-      =======================
-    section#categories
-      .container
-        .row
-          .col-12
-            h2 Categories
-        .row.wow.zoomIn
-          // Breakfast - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/milk.png', alt='milk', width='48', height='48')
+extends layout
+
+block content
+  section#categories
+    .container
+      .row
+        .col-12
+          ul#myTab.nav.nav-tabs(role='tablist')
+            li.nav-item
+              a#home-tab.nav-link.active(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='true') Home
+            li.nav-item
+              a#recipes-tab.nav-link(data-toggle='tab', href='#recipes', role='tab', aria-controls='profile', aria-selected='false') Recipes
+            li.nav-item
+              a#categories-tab.nav-link(data-toggle='tab', href='#categories', role='tab', aria-controls='contact', aria-selected='false') Categories
+            li.nav-item
+              a#users-tab.nav-link(data-toggle='tab', href='#users', role='tab', aria-controls='contact', aria-selected='false') Users  
+          #myTabContent.tab-content
+            #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
               br
-              |             Breakfast
-          // Meat - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/steak.png', alt='meat', width='48', height='48')
+              .table-responsive
+                  table#dataTable.table.table-bordered(width='100%', cellspacing='15')
+                      thead
+                          tr
+                              th Title
+                              th Description
+                              
+                      tbody
+                    
+                                  tr.odd.gradeX
+                                      td
+                                      th
+            #recipes.tab-pane.fade(role='tabpanel', aria-labelledby='recipes-tab')
               br
-              |             Meat
-          // Seafood - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/fish.png', alt='fish', width='48', height='48')
-              br
-              |             Sea food
-          // Snacks- Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/peanuts.png', alt='peanuts', width='48', height='48')
-              br
-              |             Snacks
-          // Spicy - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/chili.png', alt='chili', width='48', height='48')
-              br
-              |             Spicy
-          // Vegetarian - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/vegan.png', alt='vegan', width='48', height='48')
-              br
-              |             Vegetarian
-        .row.wow.zoomIn
-          .col-12.text-center.show-all
-            .category-item.text-center
-              i.fa.fa-cutlery.fa-2x(aria-hidden='true')
-              br
-              |             Show All
-    //
-      Recipes Items
-      ==================
-    section#items
-      .container
-        .row
-          .col-12
-            h2 Recipes
-        .row
-          // First recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Second recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Third recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Fourth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Fifth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Sixth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Seventh recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Eight recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Ninth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-    //
-      Website Footer
-      ===================
-    footer
-      .container
-        .row
-          // About
-          .col-md-3.col-sm-12.text-center
-            h3 About
-            .footer-about
-              | "A recipe book is one that you use daily and what we in our family
-              | call 'a living book' — a book that you use all the time,
-              | not just read once and discard on the shelf. nnnnn
-              | Recipes are by nature derivative and meant to be shared -
-              | that is how they improve, are changed, how new ideas are formed. ”
-          // Author
-          .col-md-3.col-sm-12.text-center
-            .footer-author
-              | Made with
-              i.fa.fa-heart(aria-hidden='true')
-              |             love by
-              a(href='https://jraleman.com/', target='_blank') Jose Ramon
-              | .
-          // Author
-          .col-md-3.col-sm-12.text-center
-            .footer-author
-              | Made with
-              i.fa.fa-heart(aria-hidden='true')
-              |             love by
-              a(href='https://jraleman.com/', target='_blank') Jose Ramon
-              | .    
-    //
-      JavaScript files
-      =====================
-    script(charset='utf-8', src='js/jquery-3.3.1.min.js')
-    script(charset='utf-8', src='js/bootstrap.min.js')
-    script(charset='utf-8', src='js/wow.min.js')
-    script(charset='utf-8', src='js/scripts.js')
+              .container
+                .row
+                  .col-12
+                    h2 Recipes
+                    a.btn.btn-sm.btn-primary.shadow-sm(href='#addRecipe', data-toggle='modal', data-target='#addRecipe') Add Recipe 
+                    br
+                .row
+                  // First recipe item
+                  br
+                  .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
+                    .recipe-item.text-center
+                      a(href='recipe.html')
+                        img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
+                      br
+                      h3 Barbecue Pork Ribs
+
+            #categories.tab-pane.fade(role='tabpanel', aria-labelledby='categories-tab') ...
+            #users.tab-pane.fade(role='tabpanel', aria-labelledby='users-tab') ...
+    // /.container-fluid
+    // End of Main Content
+    #addRecipe.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addUserLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+          .modal-content
+              .modal-header
+                  h5#addRecipeLabel.modal-title Add Recipe
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true')
+              .modal-body
+                  form(method='POST', action='/users/register')
+                      
+                      #form-group
+                          label Title:
+                          input.form-control(name='name', type='text')
+                      #form-group
+                          label Decription:
+                          input.form-control(name='email', type='text')
+                      #form-group
+                          label timetocook:
+                          input.form-control(name='phone', type='text')
+                      #form-group
+                          label dfficulty:
+                          input.form-control(name='username', type='text')
+                      #form-group
+                          label servings:
+                          input.form-control(name='password', type='password')
+                      #form-group
+                          label ingredients:
+                          input.form-control(name='password2', type='password')
+                          br
+                      input.btn.btn-primary(type='submit', value='Submit')
+                      a.btn.btn-danger(href='/users') Cancel   
+    
