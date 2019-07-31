@@ -2,6 +2,37 @@ const mongoose = require('mongoose');
 
 // User schema
 
+const DirectionsSchema = mongoose.Schema({
+    
+    order:{
+        type: String,
+        required: false
+    },
+    description:{
+        type: String,
+        required: false
+    },
+
+    
+});
+
+const IngredientsSchema = mongoose.Schema({
+    
+    description:{
+        type: String,
+        required: false
+    },
+    amount:{
+        type: String,
+        required: false
+    },
+    measurements:{
+        type: String,
+        required: false
+    },
+    
+});
+
 const RecipeSchema = mongoose.Schema({
     title:{
         type: String,
@@ -27,14 +58,8 @@ const RecipeSchema = mongoose.Schema({
         type: String,
         required: false
     },
-    ingredients:{
-        type: String,
-        required: false
-    },
-    Directions:{
-        phone: {type: String},
-        mobile: {type: String},
-    },
+    ingredients:[IngredientsSchema],
+    directions:[DirectionsSchema],
 });
 
 

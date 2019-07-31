@@ -40,12 +40,14 @@ block content
                 .row
                   // First recipe item
                   br
-                  .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-                    .recipe-item.text-center
-                      a(href='recipe.html')
-                        img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-                      br
-                      h3 Barbecue Pork Ribs
+                  each recipe, i in recipes
+                    .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
+                      .recipe-item.text-center
+                        a(href='/recipes/'+recipe.id)
+                          img(src='/'+recipe.image, alt='bbq-pork-ribs')
+                        br
+                        h3
+                          = recipe.title
 
             #categories.tab-pane.fade(role='tabpanel', aria-labelledby='categories-tab') ...
             #users.tab-pane.fade(role='tabpanel', aria-labelledby='users-tab') ...
@@ -59,27 +61,30 @@ block content
                   button.close(type='button', data-dismiss='modal', aria-label='Close')
                       span(aria-hidden='true')
               .modal-body
-                  form(method='POST', action='/users/register')
+                  form(method='POST', action='/recipes/add' enctype="multipart/form-data")
                       
                       #form-group
                           label Title:
-                          input.form-control(name='name', type='text')
+                          input.form-control(name='title', type='text')
                       #form-group
                           label Decription:
-                          input.form-control(name='email', type='text')
+                          input.form-control(name='description', type='text')
                       #form-group
                           label timetocook:
-                          input.form-control(name='phone', type='text')
+                          input.form-control(name='image', type='text')
                       #form-group
                           label dfficulty:
-                          input.form-control(name='username', type='text')
+                          input.form-control(name='timetocook', type='text')
                       #form-group
                           label servings:
-                          input.form-control(name='password', type='password')
+                          input.form-control(name='dfficulty', type='text')
+                      #form-group
+                          label image:
+                          input.form-control(type='file', name='image')    
                       #form-group
                           label ingredients:
-                          input.form-control(name='password2', type='password')
+                          input.form-control(name='servings', type='text')
                           br
                       input.btn.btn-primary(type='submit', value='Submit')
-                      a.btn.btn-danger(href='/users') Cancel   
+                      a.btn.btn-danger(href='/recipes') Cancel   
     

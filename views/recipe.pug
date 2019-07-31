@@ -1,126 +1,114 @@
 extends layout
 
 block content
-    Recipes Categories
-    section#categories
+  section#recipe
       .container
         .row
+          // Title
           .col-12
-            h2 Categories
-        .row.wow.zoomIn
-          // Breakfast - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/milk.png', alt='milk', width='48', height='48')
-              br
-              |             Breakfast
-          // Meat - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/steak.png', alt='meat', width='48', height='48')
-              br
-              |             Meat
-          // Seafood - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/fish.png', alt='fish', width='48', height='48')
-              br
-              |             Sea food
-          // Snacks- Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/peanuts.png', alt='peanuts', width='48', height='48')
-              br
-              |             Snacks
-          // Spicy - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/chili.png', alt='chili', width='48', height='48')
-              br
-              |             Spicy
-          // Vegetarian - Category Item
-          .col-lg-2.col-md-3.col-sm-4.col-xs-6
-            .category-item.text-center
-              img(src='images/icons/vegan.png', alt='vegan', width='48', height='48')
-              br
-              |             Vegetarian
-        .row.wow.zoomIn
-          .col-12.text-center.show-all
-            .category-item.text-center
-              i.fa.fa-cutlery.fa-2x(aria-hidden='true')
-              br
-              |             Show All
-    //
-      Recipes Items
-      ==================
-    section#items
-      .container
-        .row
+            h2
+              =recipe.title
+        .row.vertical-align
           .col-12
-            h2 Recipes
-        .row
-          // First recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Second recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Third recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Fourth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Fifth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Sixth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Seventh recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Eight recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Ninth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-    //
-    
+            // Picture
+            .col-md-8.pull-left.wow.swing
+              img.recipe-picture(src='/'+recipe.image, alt='bbq-pork-ribs')
+            // Info
+            .col-md-4.pull-right.wow.lightSpeedIn
+              .recipe-info
+                h3 Info
+                // Time
+                .row
+                  .col-2.text-center
+                    i.fa.fa-clock-o(aria-hidden='true')
+                  .col-6 Time
+                  .col-4 
+                    =recipe.timetocook
+                // Difficulty
+                .row
+                  .col-2.text-center
+                    i.fa.fa-area-chart(aria-hidden='true')
+                  .col-6 Difficulty
+                  .col-4
+                    i.fa.fa-star(aria-hidden='true')
+                    i.fa.fa-star(aria-hidden='true')
+                    i.fa.fa-star(aria-hidden='true')
+                // Serves
+                .row
+                  .col-2.text-center
+                    i.fa.fa-users(aria-hidden='true')
+                  .col-6 Servings
+                  .col-4 
+                    =recipe.servings
+        // Ingredients
+        .row.wow.slideInUp
+          .col-12
+            .recipe-ingredients
+              h3 Ingredients - 
+                a(href='#addRecipe', data-toggle='modal', data-target='#addRecipe')|Add
+              dl.ingredients-list
+                each recipes, i in recipe.ingredients
+                  dt 
+                    = recipes.amount
+                  dd 
+                    = recipes.description
+                
+        // Directions
+        .row.wow.slideInUp
+          .col-12
+            .recipe-directions
+              h3 Directions - 
+                a(href='#addDirections', data-toggle='modal', data-target='#addDirections')|Add
+              ol
+                each recipes, i in recipe.directions
+                  li 
+                    = recipes.description
+                
+        // Back to recipes
+        .row.wow.rollIn
+          .col-12.text-center
+            a(href='index.html')
+              i.fa.fa-backward(aria-hidden='true')
+              |             Go to back to recipes.
+  #addRecipe.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addUserLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+          .modal-content
+              .modal-header
+                  h5#addRecipeLabel.modal-title Add Recipe
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true')
+              .modal-body
+                  form(method='POST', action='/recipes/ingredients/add/'+recipe.id)
+                      
+                      #form-group
+                          label Description:
+                          input.form-control(name='description', type='text')
+                      #form-group
+                          label Amount:
+                          input.form-control(name='amount', type='text')
+                      #form-group
+                          label Measurements:
+                          input.form-control(name='measurements', type='text')
+                          br
+                      input.btn.btn-primary(type='submit', value='Submit')
+                      a.btn.btn-danger(href='/recipes/ingredients/add/'+recipe._id) Cancel  
+  #addDirections.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addDirectionsLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                h5#addDirectionsLabel.modal-title Add Recipe
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true')
+            .modal-body
+                form(method='POST', action='/recipes/directions/add/'+recipe.id)
+                    
+                    #form-group
+                        label Description:
+                        input.form-control(name='order', type='text')
+                    #form-group
+                        label Amount:
+                        input.form-control(name='description', type='text')
+                    
+                        br
+                    input.btn.btn-primary(type='submit', value='Submit')
+                    a.btn.btn-danger(href='/recipes/ingredients/add/'+recipe._id) Cancel                

@@ -59,66 +59,14 @@ block content
             h2 Recipes
         .row
           // First recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Second recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Third recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Fourth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Fifth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Sixth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Seventh recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Eight recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
-          // Ninth recipe item
-          .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-            .recipe-item.text-center
-              a(href='recipe.html')
-                img(src='images/bbq-pork-ribs.jpg', alt='bbq-pork-ribs')
-              br
-              h3 Barbecue Pork Ribs
+          br
+          each recipe, i in recipes
+            .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
+              .recipe-item.text-center
+                a(href='/recipes/'+recipe.id)
+                  img(src='/'+recipe.image, alt='bbq-pork-ribs')
+                br
+                h3
+                  = recipe.title
+          
     //

@@ -24,6 +24,9 @@ let User = require('./models/user');
 
 let Company = require('./models/company');
 
+let Recipe = require('./models/recipe');
+
+
 // Call Moongoose connection
 const mongoose = require('mongoose');
 mongoose.connect(config.database,{ useNewUrlParser: true });
@@ -72,9 +75,9 @@ app.use((req, res, next) => {
 
 //Set Public folder
 
-app.use(express.static(path.join(__dirname, 'public')))
+//app.use(express.static(path.join(__dirname, 'public')))
 
-app.use(express.static(path.join(__dirname, 'NewSB')))
+//app.use(express.static(path.join(__dirname, 'NewSB')))
 
 app.use(express.static(path.join(__dirname, 'recipeBook')))
 
@@ -123,7 +126,8 @@ app.get('/', ensureAuthenticated, function(req, res){
             Company.find({}, function(err, companies){
             Company.countDocuments({'name':user.company}, function(err, numOfCompanies) {
                 Site.countDocuments({'name': user.sites}, function(err, numOfSites) {
-                    User.countDocuments({'company': user.company}, function(err, numOfUsers) {
+                    Recipe.find({}, function(err, recipes) {
+                        User.countDocuments({'company': user.company}, function(err, numOfUsers) {
                        
                             if(err){
                                 console.log(err)
@@ -137,13 +141,17 @@ app.get('/', ensureAuthenticated, function(req, res){
                                     numOfCompanies: numOfCompanies,
                                     numOfSites: numOfSites,
                                     numOfUsers:numOfUsers,
+                                    recipes:recipes,
+                                    
             
                                 });
+                                //console.log(recipes)
                             }
                         });        
                     });  
                 });
             });
+        });
         });         
     });
 });
@@ -157,6 +165,7 @@ let apiCompany = require('./routes/apiCompany');
 let companies = require('./routes/companies');
 let site = require('./routes/sites');
 let admin = require('./routes/admin');
+let recipe = require('./routes/recipes');
 
 app.use('/users', users);
 app.use('/api/v1/company/', apiCompany);
@@ -164,6 +173,7 @@ app.use('/api/v1/auth/', jwt);
 app.use('/companies', companies);
 app.use('/sites', site);
 app.use('/admin', admin);
+app.use('/recipes', recipe);
 
 /* app.use('*', function(req, res) {
     res.status(404).end();
