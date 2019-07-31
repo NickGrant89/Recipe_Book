@@ -56,9 +56,11 @@ block content
       .container
         .row
           .col-12
-            h2 Recipes
+            h2 Recipes - 
+                a.btn.btn-lg.btn-primary.shadow-sm(href='#addRecipe', data-toggle='modal', data-target='#addRecipe') Add Recipe
         .row
           // First recipe item
+          br
           br
           each recipe, i in recipes
             .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
@@ -70,3 +72,34 @@ block content
                   = recipe.title
           
     //
+    #addRecipe.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addUserLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#addRecipeLabel.modal-title Add Recipe
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true')
+                .modal-body
+                    form(method='POST', action='/recipes/add' enctype="multipart/form-data")
+                        
+                        #form-group
+                            label Title:
+                            input.form-control(name='title', type='text')
+                        #form-group
+                            label Decription:
+                            input.form-control(name='description', type='text')
+                        #form-group
+                            label Time To Cook:
+                            input.form-control(name='image', type='text')
+                        #form-group
+                            label Dfficulty:
+                            input.form-control(name='timetocook', type='text')
+                        #form-group
+                            label Servings:
+                            input.form-control(name='dfficulty', type='text')
+                        #form-group
+                            label Image:
+                            input.form-control(type='file', name='image')
+                            br
+                        input.btn.btn-primary(type='submit', value='Submit')
+                        a.btn.btn-danger(href='/recipes') Cancel   
