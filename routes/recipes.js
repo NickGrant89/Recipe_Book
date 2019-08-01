@@ -201,4 +201,36 @@ var subdoc = recipe.directions[0];
 });
 });
 
+ //Delete edit form
+ router.delete('/:id', ensureAuthenticated, (req, res) => {
+    /* if(!req.user._id){
+        res.status(500).send();
+    } */
+
+    let query = {_id:req.params.id}
+    console.log(query)
+
+    // Equivalent to `parent.children.pull(_id)`
+        recipe.ingredients.id(_id).remove();
+        // Equivalent to `parent.child = null`
+        recipe.ingredients.remove();
+        recipe.save(function (err) {
+        if (err) return handleError(err);
+        console.log('the subdocs were removed');
+        });
+
+    Recipe.findById(req.params.id, function(err, device){
+        /* if(device.owner != req.user._id){
+            res.status(500).send();
+        }else{ */
+            Recipe.deleteOne(query, function(err){
+                if(err){
+                    console.log(err)
+                }
+                res.send('Success');
+            });
+        //}
+    });
+});
+
 module.exports = router;

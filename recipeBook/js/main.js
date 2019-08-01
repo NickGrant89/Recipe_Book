@@ -1,4 +1,28 @@
+$(document).ready(function(){
+    $('.recipe-delete').on('click', function(e){
+        $target = $(e.target);
+        console.log($target.attr('data-id'))
+        const id = $target.attr('data-id');
+        var delDevice =  confirm('Are you sure you want to delete this device?');
+        if(delDevice == true){
+            $.ajax({
+                type:'DELETE',
+                url: '/recipes/'+id,
+                success: function(response){
+                 alert('Device Deleted');
+                 window.location.href='/recipes'
+                },
+                error: function(err){
+                       console.log(err); 
+                }
+            });
+        }
+        else{
+           
+        }
 
+    });
+});
 
 (function ($) {
     "use strict";
