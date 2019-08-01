@@ -161,14 +161,14 @@ app.get('/', ensureAuthenticated, function(req, res){
 
 let users = require('./routes/users');
 let jwt = require('./routes/apiJWT');
-let apiCompany = require('./routes/apiCompany');
+let apiRecipe = require('./routes/apiRecipe');
 let companies = require('./routes/companies');
 let site = require('./routes/sites');
 let admin = require('./routes/admin');
 let recipe = require('./routes/recipes');
 
 app.use('/users', users);
-app.use('/api/v1/company/', apiCompany);
+app.use('/api/v1/recipes/', apiRecipe);
 app.use('/api/v1/auth/', jwt);
 app.use('/companies', companies);
 app.use('/sites', site);

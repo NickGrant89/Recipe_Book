@@ -28,7 +28,8 @@ block content
                 .row
                   .col-2.text-center
                     i.fa.fa-area-chart(aria-hidden='true')
-                  .col-6 Difficulty
+                  .col-6 Difficulty -
+                    = recipe.dfficulty
                   .col-4
                     i.fa.fa-star(aria-hidden='true')
                     i.fa.fa-star(aria-hidden='true')
@@ -45,13 +46,17 @@ block content
           .col-12
             .recipe-ingredients
               h3 Ingredients - 
-                a(href='#addRecipe', data-toggle='modal', data-target='#addRecipe')|Add
+                a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|Add
               dl.ingredients-list
                 each recipes, i in recipe.ingredients
                   dt 
-                    = recipes.amount
+                    = recipes.amount + recipes.measurements
                   dd 
                     = recipes.description
+                    |       - 
+                    a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|   Edit
+                    |       |
+                    a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|   Delete
                 
         // Directions
         .row.wow.slideInUp
@@ -63,52 +68,59 @@ block content
                 each recipes, i in recipe.directions
                   li 
                     = recipes.description
+                    |       - 
+                    a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|   Edit
+                    |       |
+                    a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|   Delete
                 
         // Back to recipes
         .row.wow.rollIn
           .col-12.text-center
-            a(href='index.html')
+            a(href='/recipes')
               i.fa.fa-backward(aria-hidden='true')
               |             Go to back to recipes.
-  #addRecipe.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addUserLabel', aria-hidden='true')
+  #addIngredients.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addIngredientsLabel', aria-hidden='true')
       .modal-dialog(role='document')
           .modal-content
               .modal-header
-                  h5#addRecipeLabel.modal-title Add Recipe
+                  h5#addIngredientsLabel.modal-title Add Ingredients
                   button.close(type='button', data-dismiss='modal', aria-label='Close')
                       span(aria-hidden='true')
               .modal-body
                   form(method='POST', action='/recipes/ingredients/add/'+recipe.id)
-                      
                       #form-group
                           label Description:
                           input.form-control(name='description', type='text')
-                      #form-group
-                          label Amount:
-                          input.form-control(name='amount', type='text')
-                      #form-group
-                          label Measurements:
-                          input.form-control(name='measurements', type='text')
+                      .form-row
+                        #form-group.col-md-7
+                          label Amount
+                          input#inputCity.form-control(name='amount', type='text')
+                        #form-group.col-md-4
+                          label Measurements
+                          select.form-control(name='measurements', type='text')
+                            option(name='measurements', type='text' selected='') Choose...
+                            option mg
+                            option g
+                            option kg
+                            option ml
+                            option l
+                            option kl
                           br
-                      input.btn.btn-primary(type='submit', value='Submit')
-                      a.btn.btn-danger(href='/recipes/ingredients/add/'+recipe._id) Cancel  
+                      input.btn.btn-primary(type='submit', value='Save')
+                      a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel  
   #addDirections.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addDirectionsLabel', aria-hidden='true')
     .modal-dialog(role='document')
         .modal-content
             .modal-header
-                h5#addDirectionsLabel.modal-title Add Recipe
+                h5#addDirectionsLabel.modal-title Add Directions
                 button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true')
             .modal-body
                 form(method='POST', action='/recipes/directions/add/'+recipe.id)
-                    
                     #form-group
                         label Description:
-                        input.form-control(name='order', type='text')
-                    #form-group
-                        label Amount:
                         input.form-control(name='description', type='text')
                     
                         br
                     input.btn.btn-primary(type='submit', value='Submit')
-                    a.btn.btn-danger(href='/recipes/ingredients/add/'+recipe._id) Cancel                
+                    a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel                

@@ -2,55 +2,54 @@ extends layout
 
 block content
   section#categories
+    .pricing-header.px-3.py-3.pt-md-5.pb-md-4.mx-auto.text-center
+      h1.display-4 Pricing
+      p.lead
+        | Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.
     .container
-      .row
-        .col-12
-          ul#myTab.nav.nav-tabs(role='tablist')
-            li.nav-item
-              a#home-tab.nav-link.active(data-toggle='tab', href='#home', role='tab', aria-controls='home', aria-selected='true') Home
-            li.nav-item
-              a#recipes-tab.nav-link(data-toggle='tab', href='#recipes', role='tab', aria-controls='profile', aria-selected='false') Recipes
-            li.nav-item
-              a#categories-tab.nav-link(data-toggle='tab', href='#categories', role='tab', aria-controls='contact', aria-selected='false') Categories
-            li.nav-item
-              a#users-tab.nav-link(data-toggle='tab', href='#users', role='tab', aria-controls='contact', aria-selected='false') Users  
-          #myTabContent.tab-content
-            #home.tab-pane.fade.show.active(role='tabpanel', aria-labelledby='home-tab')
-              br
-              .table-responsive
-                  table#dataTable.table.table-bordered(width='100%', cellspacing='15')
-                      thead
-                          tr
-                              th Title
-                              th Description
-                              
-                      tbody
-                    
-                                  tr.odd.gradeX
-                                      td
-                                      th
-            #recipes.tab-pane.fade(role='tabpanel', aria-labelledby='recipes-tab')
-              br
-              .container
-                .row
-                  .col-12
-                    h2 Recipes
-                    a.btn.btn-sm.btn-primary.shadow-sm(href='#addRecipe', data-toggle='modal', data-target='#addRecipe') Add Recipe 
-                    br
-                .row
-                  // First recipe item
-                  br
-                  each recipe, i in recipes
-                    .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
-                      .recipe-item.text-center
-                        a(href='/recipes/'+recipe.id)
-                          img(src='/'+recipe.image, alt='bbq-pork-ribs')
-                        br
-                        h3
-                          = recipe.title
+      .card-deck.mb-3.text-center
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Free
+          .card-body
+            h1.card-title.pricing-card-title
+              | $0 
+              small.text-muted / mo
+            ul.list-unstyled.mt-3.mb-4
+              li 10 users included
+              li 2 GB of storage
+              li Email support
+              li Help center access
+            button.btn.btn-lg.btn-block.btn-outline-primary(type='button') Sign up for free
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Pro
+          .card-body
+            h1.card-title.pricing-card-title
+              | $15 
+              small.text-muted / mo
+            ul.list-unstyled.mt-3.mb-4
+              li 20 users included
+              li 10 GB of storage
+              li Priority email support
+              li Help center access
+            button.btn.btn-lg.btn-block.btn-primary(type='button') Get started
+        .card.mb-4.shadow-sm
+          .card-header
+            h4.my-0.font-weight-normal Enterprise
+          .card-body
+            h1.card-title.pricing-card-title
+              | $29 
+              small.text-muted / mo
+            ul.list-unstyled.mt-3.mb-4
+              li 30 users included
+              li 15 GB of storage
+              li Phone and email support
+              li Help center access
+            button.btn.btn-lg.btn-block.btn-primary(type='button') Contact us
 
-            #categories.tab-pane.fade(role='tabpanel', aria-labelledby='categories-tab') ...
-            #users.tab-pane.fade(role='tabpanel', aria-labelledby='users-tab') ...
+
+         
     // /.container-fluid
     // End of Main Content
     #addRecipe.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addUserLabel', aria-hidden='true')

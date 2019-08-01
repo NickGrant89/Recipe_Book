@@ -58,6 +58,10 @@ const RecipeSchema = mongoose.Schema({
         type: String,
         required: false
     },
+    company:{
+        type: String,
+        required: false
+    },
     ingredients:[IngredientsSchema],
     directions:[DirectionsSchema],
 });

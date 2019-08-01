@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 
+//Image Upload Function
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
         cb(null, './uploads/');
@@ -36,14 +37,18 @@ let User = require('../models/user');
 
 let Recipe = require('../models/recipe');
 
-router.get('/add', ensureAuthenticated, function(req, res){
-    res.render('add_company', {
-    title:'Add Company',
+//GET All Recipes
+router.get('/', ensureAuthenticated, function(req, res){
+    Recipe.find({}, function(err, recipes){
+                    res.render('recipes', {
+                        title:'Recipes',
+                        recipes: recipes,
+                    });
+                
+            });
+        });
 
-    });
-});
-
-//Get single company page
+//Get single Recipe page
 router.get('/:id', ensureAuthenticated, (req, res) => {
     Recipe.findById(req.params.id, function(err, recipe){
             res.render('recipe',{
@@ -57,18 +62,15 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
 
 
 
-
+//Add recipe.
 // ...rest of the initial code omitted for simplicity.
 const { check, validationResult } = require('express-validator/check');
 
 router.post('/add', upload.single('image'),[
     //Name
-    check('title').isLength({min:3}).trim().withMessage('PC Name required'),
+    check('title').isLength({min:3}).trim().withMessage('Title required'),
     //Company
-    check('description').isLength({min:1}).trim().withMessage('IP Address required'),
-    //Username
-    check('image').isLength({ min: 3}),
-    // username must be an email
+    check('description').isLength({min:1}).trim().withMessage('Description required'),
     
 ], (req, res) => {
   // Finds the validation errors in this request and wraps them in an object with handy functions
@@ -97,13 +99,14 @@ router.post('/add', upload.single('image'),[
        }
        else{
            req.flash('success', 'Recipe Added')
-           res.redirect('/recipe')
+           res.redirect('/recipes')
         }
     });
 
 });
 
 
+//Add ingredients to recipe.
 
 router.post('/ingredients/add/:id',[
     //Name
@@ -126,8 +129,6 @@ router.post('/ingredients/add/:id',[
   console.log(req.params.id);
   Recipe.findById(req.params.id, function(err, recipe){
     
-    
-
 // create a comment
 recipe.ingredients.push({ 
     description : req.body.description,
@@ -147,7 +148,7 @@ var subdoc = recipe.ingredients[0];
      }
      else{
         req.flash('success', ' Added')
-         res.redirect('/')
+        res.redirect('/recipes/'+ recipe._id)
     }
 
 });
@@ -155,9 +156,9 @@ var subdoc = recipe.ingredients[0];
 });
 });
 
+//Add directions to recipe
 router.post('/directions/add/:id',[
-    //Name
-    check('order').isLength({min:1}).trim().withMessage('PC Name required'),
+    
     //Company
     check('description').isLength({min:1}).trim().withMessage('IP Address required'),
  
@@ -173,12 +174,9 @@ router.post('/directions/add/:id',[
   }
   console.log(req.params.id);
   Recipe.findById(req.params.id, function(err, recipe){
-    
-    
 
-// create a comment
 recipe.directions.push({ 
-    order: req.body.order,
+
     description : req.body.description,
  
 });
@@ -195,28 +193,12 @@ var subdoc = recipe.directions[0];
      }
      else{
         req.flash('success', ' Added')
-         res.redirect('/')
+        res.redirect('/recipes/'+ recipe._id)
     }
 
 });
 
 });
 });
-
-
-
-//GET Method to display all companies on page.
-router.get('/', ensureAuthenticated, function(req, res){
-    Recipe.find({}, function(err, recipes){
-                    res.render('recipes', {
-                        title:'Recipes',
-                        recipes: recipes,
-                    });
-                
-            });
-        });
-
-
-
 
 module.exports = router;

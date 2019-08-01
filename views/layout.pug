@@ -27,26 +27,32 @@ html(lang='en')
     //
       Website Logo
       =================
-    .container
-      .row
-        .col-12  
-          nav.navbar.navbar-expand-lg.navbar-light.bg-light
-            a.navbar-brand(href='#') Navbar
-            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
-              span.navbar-toggler-icon
-            #navbarNavDropdown.collapse.navbar-collapse
-              ul.navbar-nav
-                li.nav-item.active
-                  a.nav-link(href='/')
-                    | Home 
-                    span.sr-only (current)
-                li.nav-item
-                  a.nav-link(href='/recipes') Recipes
-                li.nav-item
-                  a.nav-link(href='/users') Users
+    
+
+
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='#') Navbar
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+      #navbarNavDropdown.collapse.navbar-collapse
+        ul.navbar-nav
+          li.nav-item.active
+            a.nav-link(href='/')
+              | Home 
+              span.sr-only (current)
+          li.nav-item
+            a.nav-link(href='/recipes') Recipes
+          li.nav-item
+            a.nav-link(href='/users') Users
+          li.nav-item
+            a.nav-link(href='/users/logout') Logout    
+      .navbar-collapse.collapse.w-100.order-3.dual-collapse2
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            a.nav-link(href='/users/logout') Logout     
  
     section#logo
-      .container.text-center.wow.pulse
+      .container.text-right.wow.pulse
         img(src='/images/logo-white.svg', alt='logo')
         br
         h1 Recipe Book
@@ -57,30 +63,10 @@ html(lang='en')
       .container
         .row
           // About
-          .col-md-3.col-sm-12.text-center
-            h3 About
-            .footer-about
-              | "A recipe book is one that you use daily and what we in our family
-              | call 'a living book' — a book that you use all the time,
-              | not just read once and discard on the shelf. nnnnn
-              | Recipes are by nature derivative and meant to be shared -
-              | that is how they improve, are changed, how new ideas are formed. ”
-          // Author
-          .col-md-3.col-sm-12.text-center
-            .footer-author
-              | Made with
-              i.fa.fa-heart(aria-hidden='true')
-              |             love by
-              a(href='https://jraleman.com/', target='_blank') Jose Ramon
-              | .
-          // Author
-          .col-md-3.col-sm-12.text-center
-            .footer-author
-              | Made with
-              i.fa.fa-heart(aria-hidden='true')
-              |             love by
-              a(href='https://jraleman.com/', target='_blank') Jose Ramon
-              | .    
+          .col-md-12.col-sm-12.text-center
+            .footer-copyright.text-center.py-3
+                | © 2019 Copyright:
+                a(href='#')  Recipe Book
     //
       JavaScript files
       =====================

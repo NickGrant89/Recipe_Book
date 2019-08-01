@@ -8,23 +8,26 @@ const of = require('../middleware/onec-functions');
 // Import Device Model
 let Company = require('../models/company');
 
+
+let Recipe = require('../models/recipe');
+
 let Site = require('../models/site');
 
 let User = require('../models/user');
 
 
 
-//GET Method for all company 
 
-router.get('/', checkAuth, (req, res) => {
-    console.log(of.ifSuperAdmin(req.params.id));
-    Company.find({}, function(err, company){
+//GET Method for all recipes 
+
+router.get('/', (req, res) => {
+    Recipe.find({}, function(err, recipes){
         if(err){
             console.log(err)
         }else{
             //res.send(devices);
             res.json({
-                company
+                recipes
             })
             //console.log(company);
         }
@@ -43,27 +46,16 @@ router.get('/nick', checkAuth, (req, res) => {
 
 //GET All Company + Sites + Devices - :id
 
-router.get('/:id', checkAuth, checkCompany, (req, res) => {
-    
-    Company.findById(req.params.id, function(err, company){
-        if(err){
-            res.send(err);
-        }
-        const query = {'company': company.name};
-            Site.find(query, function(err, site){
-                Device.find(query, function(err, device){
-                    if(!company) return res.status(404).send('The device with the given ID cannot be found!'), console.log('ID not found!')
-                    res.json({
-                        company: company,
-                        sites: site,
-                        devices: device
-                        
-                    });
-                });
-            }); 
+router.get('/:id', (req, res) => {
+    Recipe.findById(req.params.id, function(err, recipe){
+
+            res.json({
+                recipe:recipe
+                
+            });
         });
     }); 
-
+     
 
 //POST to add Company
 

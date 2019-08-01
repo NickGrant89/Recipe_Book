@@ -1,48 +1,37 @@
 extends layout
 
 block content
-  // Begin Page Content
-  .container-fluid
-    // Page Heading
-    .d-sm-flex.align-items-center.justify-content-between.mb-4
-      h1.h3.mb-0.text-gray-800 
-      a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='#addUser', data-toggle='modal', data-target='#addUser')
-        i.fas.fa-download.fa-sm.text-white-50
-        |  Add User  
-    // Content Row
-    .row
-      // Content Column
-      .col-lg-12.mb-4
-        // DataTales Example
-        .card.shadow.mb-4
-          .card-header.py-3
-            h6.m-0.font-weight-bold.text-primary #{title} Info
-          .card-body
-            .table-responsive
-              table#dataTable.table.table-bordered(width='100%', cellspacing='15')
-                thead
-                  tr
-                    th Name
-                    th Username
-                    th Email
-                    th Phone
-                    th Company
-                    th Admin
-                tbody
-                  each user, i in users
-                    tr.odd.gradeX
-                      td
-                        a(href="/users/"+ user._id)=user.name
-                      td
-                        = user.username
-                      td
-                        = user.email
-                      td
-                        = user.phone
-                      td
-                        = user.company
-                      td
-                        = user.admin 
+  section#recipe
+    // Begin Page Content
+    .container
+      // Page Heading
+      .d-sm-flex.align-items-center.justify-content-between.mb-4
+        h1.h3.mb-0.text-gray-800 
+        a.d-none.d-sm-inline-block.btn.btn-sm.btn-primary.shadow-sm(href='#addUser', data-toggle='modal', data-target='#addUser')
+          i.fas.fa-download.fa-sm.text-white-50
+          |  Add User  
+      // Content Row
+      .row
+        // Content Column
+        .col-lg-12.mb-4
+          // DataTales Example
+          .card.shadow.mb-4
+            .card-header.py-3
+              h6.m-0.font-weight-bold.text-primary #{title} Info
+            .card-body
+              .table-responsive
+                table#dataTable.table.table-bordered(width='100%', cellspacing='15')
+                  thead
+                    tr
+                      th Name
+                      th Email
+                  tbody
+                    each user, i in users
+                      tr.odd.gradeX
+                        td
+                          a(href="/users/"+ user._id)=user.name
+                        td
+                          = user.email
   // /.container-fluid
   // End of Main Content
   #editUser.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editUserLabel', aria-hidden='true')

@@ -2,30 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null, './uploads/');
-    },
-    filename: function(req, file, cb ){
-        cb(null, new Date().toISOString() + file.originalname);
-    }
-});
-
-const fileFilter = (req, file, cb) =>{
-    if(file.mimetype === 'image/png' || file.mimetype === 'image/jpeg'){
-        cb(null, true);
-    }else{
-        cb(null, false);
-    }
-};
-
-const upload = multer({storage: storage, limits:{
-        fileSize: 1024 * 1024 * 5
-        },
-        fileFilter: fileFilter
-});
 
 //Passport Config
 require('../config/passport')(passport);
@@ -34,12 +10,25 @@ const of = require('../middleware/onec-functions');
 
 const ensureAuthenticated = require('../middleware/login-auth');
 
-//Bring in Users Model
+//Users Model
 let User = require('../models/user');
-//Bring in Users Model
+//Company Model
 let Company = require('../models/company');
-//Bring in Users Model
+//Site Model
 let Site = require('../models/site');
+
+//login Form
+router.get('/login', function(req, res){
+    res.render('login', {title:'Login'});
+
+});
+
+//Logout Function
+router.get('/logout', function(req, res){
+    req.logout();
+    req.flash('success', 'You have logged out');
+    res.redirect('/users/login');
+});
 
 //Get all users
 router.get('/', ensureAuthenticated, function(req, res){
@@ -66,62 +55,7 @@ router.get('/', ensureAuthenticated, function(req, res){
     });
 });
 
- //Get register form
-router.get('/register', ensureAuthenticated,  function(req, res){
-    User.findById(req.user.id, function(err, user){
-        if(err){
-            console.log(err)
-        }
-        if(user.admin == 'Super Admin'){
-            Company.find({}, function(err, companies){
-                Site.find({}, function(err, sites){
-                    res.render('register', {
-                        title:'Create User',
-                        companies: companies,
-                        sites: sites,
-                    });
-                });
-            });
-        }
-        else{
-            const q = {'company': user.company} 
-            Company.find({'name': user.company}, function(err, companies){
-                Site.find({q}, function(err, sites){
-                    res.render('register', {
-                        title:'Create User',
-                        companies: companies,
-                        sites: sites,
-                    });
-                });
-            });
-            
-        }
-    });
-});
-
-
-//login form
-router.get('/login', function(req, res){
-    res.render('login', {title:'Login'});
-
-})
-
-//login form
-router.get('/logout', function(req, res){
-    req.logout();
-    //req.flash('success', 'You have logged out');
-    res.redirect('/users/login');
-});
-
-//login process
-router.post('/login', function(req, res, next){
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/users/login',
-        failureFlash: true
-    })(req, res, next);
-});
-
+// Display Single User
 router.get('/:id', ensureAuthenticated, (req, res) => {
     User.findById(req.user._id, function(err, users){
     User.findById(req.params.id, function(err, user){
@@ -163,8 +97,55 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
 });
 });
 
+ //Get register form
+router.get('/register', ensureAuthenticated,  function(req, res){
+    User.findById(req.user.id, function(err, user){
+        if(err){
+            console.log(err)
+        }
+        if(user.admin == 'Super Admin'){
+            Company.find({}, function(err, companies){
+                Site.find({}, function(err, sites){
+                    res.render('register', {
+                        title:'Create User',
+                        companies: companies,
+                        sites: sites,
+                    });
+                });
+            });
+        }
+        else{
+            const q = {'company': user.company} 
+            Company.find({'name': user.company}, function(err, companies){
+                Site.find({q}, function(err, sites){
+                    res.render('register', {
+                        title:'Create User',
+                        companies: companies,
+                        sites: sites,
+                    });
+                });
+            });
+            
+        }
+    });
+});
+
+
+
+
+
+
+//Login Function
+router.post('/login', function(req, res, next){
+    passport.authenticate('local', {
+        successRedirect: '/',
+        failureRedirect: '/users/login',
+        failureFlash: true
+    })(req, res, next);
+});
+
 //Edit User 
-router.post('/edit/:id', upload.single('userImage'),  (req, res) => {
+router.post('/edit/:id',  (req, res) => {
     console.log(req.file);
     User.findById(req.user.id, function(err, users){ 
         //console.log(users);
@@ -194,31 +175,7 @@ router.post('/edit/:id', upload.single('userImage'),  (req, res) => {
  });
 });
 
-//Image Upload User 
-router.post('/image/:id', upload.single('userImage'),  (req, res) => {
-    console.log(req.file);
-    User.findById(req.user.id, function(err, users){ 
-        //console.log(users);
-    let user = {};
-    
-    user.userImage = req.file.path;
-    console.log(req.body.sites);
-  
-    let query = {_id:req.params.id}
-
-    User.updateOne(query, user, function(err){
-         if(err){
-             console.log(err);
-             return;
-         }
-         else{
-             res.redirect('/users')
-             
-         }
-    });
-    //console.log()
- });
-});
+//Register User Function
 
 // ...rest of the initial code omitted for simplicity.
 const { check, validationResult } = require('express-validator/check');

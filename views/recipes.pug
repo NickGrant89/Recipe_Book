@@ -66,7 +66,7 @@ block content
             .col-lg-4.col-md-6.col-sm-12.wow.fadeIn
               .recipe-item.text-center
                 a(href='/recipes/'+recipe.id)
-                  img(src='/'+recipe.image, alt='bbq-pork-ribs')
+                  img(src='/'+recipe.image, alt= recipe.title)
                 br
                 h3
                   = recipe.title
@@ -90,13 +90,13 @@ block content
                             input.form-control(name='description', type='text')
                         #form-group
                             label Time To Cook:
-                            input.form-control(name='image', type='text')
-                        #form-group
-                            label Dfficulty:
                             input.form-control(name='timetocook', type='text')
                         #form-group
-                            label Servings:
+                            label Dfficulty:
                             input.form-control(name='dfficulty', type='text')
+                        #form-group
+                            label Servings:
+                            input.form-control(name='servings', type='text')
                         #form-group
                             label Image:
                             input.form-control(type='file', name='image')
