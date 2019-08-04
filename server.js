@@ -133,7 +133,7 @@ app.get('/', ensureAuthenticated, function(req, res){
                                 console.log(err)
                             }
                             else{
-                                res.render('index', {
+                                res.render('recipes', {
                                     title:'Dashboard',
                                     sites: sites,
                                     users:users,

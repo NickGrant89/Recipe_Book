@@ -1,16 +1,74 @@
 $(document).ready(function(){
     $('.recipe-delete').on('click', function(e){
         $target = $(e.target);
-        console.log($target.attr('data-id'))
+        //console.log($target.attr('data-id'))
+        //console.log($target.attr('data-age'))
+        //const id = $target.attr('data-age');
         const id = $target.attr('data-id');
-        var delDevice =  confirm('Are you sure you want to delete this device?');
-        if(delDevice == true){
+        var delIngredients =  confirm('Are you sure you want to delete this recipe?');
+        if(delIngredients == true){
             $.ajax({
                 type:'DELETE',
                 url: '/recipes/'+id,
                 success: function(response){
-                 alert('Device Deleted');
+                 alert('Recipe Deleted');
                  window.location.href='/recipes'
+                },
+                error: function(err){
+                       console.log(err); 
+                }
+            });
+        }
+        else{
+           
+        }
+
+    });
+});
+
+$(document).ready(function(){
+    $('.ingredients-delete').on('click', function(e){
+        $target = $(e.target);
+        console.log($target.attr('data-id'))
+        console.log($target.attr('data-age'))
+        const id = $target.attr('data-age');
+        const id2 = $target.attr('data-id');
+        var delIngredients =  confirm('Are you sure you want to delete this ingredients?');
+        if(delIngredients == true){
+            $.ajax({
+                type:'DELETE',
+                url: '/recipes/ingredients/'+id+'/'+id2,
+                success: function(response){
+                 alert('Ingredients Deleted');
+                 window.location.href='/recipes/'+id
+                },
+                error: function(err){
+                       console.log(err); 
+                }
+            });
+        }
+        else{
+           
+        }
+
+    });
+});
+
+$(document).ready(function(){
+    $('.directions-delete').on('click', function(e){
+        $target = $(e.target);
+        //console.log($target.attr('data-id'))
+        //console.log($target.attr('data-age'))
+        const id = $target.attr('data-age');
+        const id2 = $target.attr('data-id');
+        var delIngredients =  confirm('Are you sure you want to delete this ingredients?');
+        if(delIngredients == true){
+            $.ajax({
+                type:'DELETE',
+                url: '/recipes/directions/'+id+'/'+id2,
+                success: function(response){
+                 alert('Directions Deleted');
+                 window.location.href='/recipes/'+id
                 },
                 error: function(err){
                        console.log(err); 

@@ -55,7 +55,7 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
                 recipe:recipe,
 
             });
-            console.log(recipe)
+            //console.log(recipe)
         });
 
     });
@@ -105,6 +105,46 @@ router.post('/add', upload.single('image'),[
 
 });
 
+//Edit recipe
+router.post('/edit/:id', ensureAuthenticated,  (req, res) => {
+    let recipe = {};
+    recipe.title = req.body.title;
+    recipe.description = req.body.description;
+    recipe.timetocook = req.body.timetocook;
+    recipe.dfficulty = req.body.dfficulty;
+    recipe.servings = req.body.servings;
+  
+    let query = {_id:req.params.id}
+
+    Recipe.updateOne(query, recipe, function(err){
+         if(err){
+             console.log(err);
+             return;
+         }
+         else{
+             res.redirect('/recipes/'+ req.params.id)
+         }
+    });
+    console.log(req.body.title)
+ });
+
+//Edit Image
+router.post('/image/edit/:id', ensureAuthenticated, upload.single('image'), (req, res) => {
+    let recipe = {};
+    recipe.image = req.file.path;
+  
+    let query = {_id:req.params.id}
+
+    Recipe.updateOne(query, recipe, function(err){
+         if(err){
+             console.log(err);
+             return;
+         }
+         else{
+             res.redirect('/recipes/'+ req.params.id)
+         }
+    });
+ });
 
 //Add ingredients to recipe.
 
@@ -168,7 +208,7 @@ router.post('/directions/add/:id',[
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     req.flash('danger', 'Please try again' ,{errors:errors.mapped()} );
-    res.redirect('/');
+    res.redirect('/recipes/'+ recipe._id);
     //console.log(req.params.id);
    return { errors: errors.mapped() };
   }
@@ -201,36 +241,90 @@ var subdoc = recipe.directions[0];
 });
 });
 
- //Delete edit form
- router.delete('/:id', ensureAuthenticated, (req, res) => {
+//Delete ingredients 
+router.delete('/ingredients/:id/:id2', ensureAuthenticated, (req, res) => {
+    console.log(req.params.id2)
+    let query = {_id:req.params.id}
+    console.log(query)
+        Recipe.findById({_id:req.params.id}, function(err, recipe){
+            /* if(device.owner != req.user._id){
+                res.status(500).send();
+            }else{ */
+                // Equivalent to `parent.children.pull(_id)`
+            recipe.ingredients.id(req.params.id2).remove();
+            // Equivalent to `parent.child = null`
+            //recipe.ingredients.remove();
+            recipe.save(function (err) {
+            if (err) return handleError(err);
+            console.log('the subdocs were removed');
+            
+        });    
+                
+                res.send('Success');
+                });
+    
+});
+    
+
+
+//Delete directions form
+router.delete('/directions/:id/:id2', ensureAuthenticated, (req, res) => {
+
     /* if(!req.user._id){
         res.status(500).send();
     } */
+    console.log(req.params.id2)
 
     let query = {_id:req.params.id}
     console.log(query)
 
-    // Equivalent to `parent.children.pull(_id)`
-        recipe.ingredients.id(_id).remove();
-        // Equivalent to `parent.child = null`
-        recipe.ingredients.remove();
-        recipe.save(function (err) {
-        if (err) return handleError(err);
-        console.log('the subdocs were removed');
-        });
+    
 
-    Recipe.findById(req.params.id, function(err, device){
+    Recipe.findById({_id:req.params.id}, function(err, recipe){
         /* if(device.owner != req.user._id){
             res.status(500).send();
         }else{ */
-            Recipe.deleteOne(query, function(err){
-                if(err){
-                    console.log(err)
-                }
+        // Equivalent to `parent.children.pull(_id)`
+        recipe.directions.id(req.params.id2).remove();
+        // Equivalent to `parent.child = null`
+        //recipe.ingredients.remove();
+        recipe.save(function (err) {
+        if (err) return handleError(err);
+        console.log('the subdocs were removed');
+        });    
+            
                 res.send('Success');
             });
         //}
     });
-});
+
+//Delete recipe 
+router.delete('/:id', ensureAuthenticated, (req, res) => {
+
+    /* if(!req.user._id){
+        res.status(500).send();
+    } */
+    console.log(req.params.id2)
+
+    let query = {_id:req.params.id}
+    console.log(query)
+
+    
+
+    Recipe.findById({_id:req.params.id}, function(err, recipe){
+            /* if(device.owner != req.user._id){
+                res.status(500).send();
+            }else{ */
+                Recipe.deleteOne(query, function(err){
+                    if(err){
+                        console.log(err)
+                    }
+                    res.send('Success');
+                });
+            //}
+        });
+        
+    });
+
 
 module.exports = router;

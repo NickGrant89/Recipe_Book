@@ -10,8 +10,8 @@ let Site = require('../models/site');
 
 let User = require('../models/user');
 
-router.get('/add', ensureAuthenticated, function(req, res){
-    res.render('add_company', {
+router.get('/', ensureAuthenticated, function(req, res){
+    res.render('company', {
     title:'Add Company',
 
     });

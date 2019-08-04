@@ -37,19 +37,17 @@ html(lang='en')
       #navbarNavDropdown.collapse.navbar-collapse
         ul.navbar-nav
           li.nav-item.active
-            a.nav-link(href='/')
-              | Home 
-              span.sr-only (current)
+            a.nav-link(href='/recipes') 
+              | Recipes
+              span.sr-only (current)    
           li.nav-item
-            a.nav-link(href='/recipes') Recipes
+            a.nav-link(href='/categories') Categories
           li.nav-item
-            a.nav-link(href='/users') Users
+            a.nav-link(href='/users') Users  
           li.nav-item
-            a.nav-link(href='/users/logout') Logout    
-      .navbar-collapse.collapse.w-100.order-3.dual-collapse2
-        ul.navbar-nav.ml-auto
+            a.nav-link(href='/settings') Settings  
           li.nav-item
-            a.nav-link(href='/users/logout') Logout     
+            a.nav-link(href='/users/logout') Logout       
  
     section#logo
       .container.text-right.wow.pulse

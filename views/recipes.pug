@@ -12,25 +12,25 @@ block content
             .category-item.text-center
               img(src='images/icons/milk.png', alt='milk', width='48', height='48')
               br
-              |             Breakfast
+              |             Starters
           // Meat - Category Item
           .col-lg-2.col-md-3.col-sm-4.col-xs-6
             .category-item.text-center
               img(src='images/icons/steak.png', alt='meat', width='48', height='48')
               br
-              |             Meat
+              |             Main
           // Seafood - Category Item
           .col-lg-2.col-md-3.col-sm-4.col-xs-6
             .category-item.text-center
               img(src='images/icons/fish.png', alt='fish', width='48', height='48')
               br
-              |             Sea food
+              |             Deserts
           // Snacks- Category Item
           .col-lg-2.col-md-3.col-sm-4.col-xs-6
             .category-item.text-center
               img(src='images/icons/peanuts.png', alt='peanuts', width='48', height='48')
               br
-              |             Snacks
+              |             Drinks
           // Spicy - Category Item
           .col-lg-2.col-md-3.col-sm-4.col-xs-6
             .category-item.text-center
@@ -43,12 +43,7 @@ block content
               img(src='images/icons/vegan.png', alt='vegan', width='48', height='48')
               br
               |             Vegetarian
-        .row.wow.zoomIn
-          .col-12.text-center.show-all
-            .category-item.text-center
-              i.fa.fa-cutlery.fa-2x(aria-hidden='true')
-              br
-              |             Show All
+        
     //
       Recipes Items
       ==================
@@ -91,9 +86,15 @@ block content
                         #form-group
                             label Time To Cook:
                             input.form-control(name='timetocook', type='text')
-                        #form-group
-                            label Dfficulty:
-                            input.form-control(name='dfficulty', type='text')
+                        #form-group.col-md-4
+                          label Dfficulty
+                          select.form-control(name='dfficulty', type='text')
+                            option(name='dfficulty', type='text' selected='') Choose...
+                            option Very Easy
+                            option Easy
+                            option Fair
+                            option Hard
+                            option Very Hard   
                         #form-group
                             label Servings:
                             input.form-control(name='servings', type='text')

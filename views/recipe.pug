@@ -13,10 +13,13 @@ block content
             // Picture
             .col-md-8.pull-left.wow.swing
               img.recipe-picture(src='/'+recipe.image, alt='bbq-pork-ribs')
+              a(href='#changeImage', data-toggle='modal', data-target='#changeImage')|   Change Image
             // Info
             .col-md-4.pull-right.wow.lightSpeedIn
               .recipe-info
-                h3 Info
+                h3 Info - 
+                   a(href='#editRecipe', data-toggle='modal', data-target='#editRecipe')|   Edit   |
+                   a.recipe-delete(href='#' data-id=recipe._id)|   Delete
                 // Time
                 .row
                   .col-2.text-center
@@ -54,9 +57,9 @@ block content
                   dd 
                     = recipes.description
                     |       - 
-                    a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|   Edit
+                    a(href='#editIngredients', data-toggle='modal', data-target='#editIngredients')|   Edit
                     |       |
-                    a.recipe-delete(href='#' data-id=recipes._id)|   Delete
+                    a.ingredients-delete(href='#' data-id=recipes._id data-age=recipe._id)|   Delete
                 
         // Directions
         .row.wow.slideInUp
@@ -69,9 +72,9 @@ block content
                   li 
                     = recipes.description
                     |       - 
-                    a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|   Edit
+                    a(href='#editDirections', data-toggle='modal', data-target='#editDirections')|   Edit
                     |       |
-                    a(href='#addIngredients', data-toggle='modal', data-target='#addIngredients')|   Delete
+                    a.directions-delete(href='#' data-id=recipes._id data-age=recipe._id)|   Delete
                 
         // Back to recipes
         .row.wow.rollIn
@@ -108,6 +111,35 @@ block content
                           br
                       input.btn.btn-primary(type='submit', value='Save')
                       a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel  
+  #editIngredients.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editIngredientsLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+          .modal-content
+              .modal-header
+                  h5#editIngredientsLabel.modal-title Edit Ingredients
+                  button.close(type='button', data-dismiss='modal', aria-label='Close')
+                      span(aria-hidden='true')
+              .modal-body
+                  form(method='POST', action='/recipes/ingredients/edit/'+recipe.id)
+                      #form-group
+                          label Description:
+                          input.form-control(name='description', type='text' value=recipe.description)
+                      .form-row
+                        #form-group.col-md-7
+                          label Amount
+                          input.form-control(name='amount', type='text' value=recipe.amount)
+                        #form-group.col-md-4
+                          label Measurements
+                          select.form-control(name='measurements', type='text')
+                            option(name='measurements', type='text' selected='') Choose...
+                            option mg
+                            option g
+                            option kg
+                            option ml
+                            option l
+                            option kl
+                          br
+                      input.btn.btn-primary(type='submit', value='Save')
+                      a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel                      
   #addDirections.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addDirectionsLabel', aria-hidden='true')
     .modal-dialog(role='document')
         .modal-content
@@ -119,8 +151,58 @@ block content
                 form(method='POST', action='/recipes/directions/add/'+recipe.id)
                     #form-group
                         label Description:
-                        input.form-control(name='description', type='text')
+                        input.form-control(name='description', type='text' value=recipe.de)
                     
                         br
                     input.btn.btn-primary(type='submit', value='Submit')
                     a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel                
+  #editDirections.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editDirectionsLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                h5#editDirectionsLabel.modal-title Edit Directions
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true')
+            .modal-body
+                form(method='POST', action='/recipes/directions/edit/'+recipe.id)
+                    #form-group
+                        label Description:
+                        input.form-control(name='description', type='text')
+                    
+                        br
+                    input.btn.btn-primary(type='submit', value='Submit')
+                    a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel          
+  #editRecipe.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editRecipeLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                h5#editRecipeLabel.modal-title Edit Recipe
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true')
+            .modal-body
+                form(method='POST', action='/recipes/edit/'+recipe._id)
+                    
+                    #form-group
+                        label Title:
+                        input.form-control(name='title', type='text' value=recipe.title)
+                    #form-group
+                        label Decription:
+                        input.form-control(name='description', type='text' value=recipe.description)
+                    #form-group
+                        label Time To Cook:
+                        input.form-control(name='timetocook', type='text' value=recipe.timetocook)
+                    #form-group
+                        label Dfficulty
+                        select.form-control(name='dfficulty', type='text')
+                          option(name='dfficulty', type='text' selected='') Choose...
+                          option Very Easy
+                          option Easy
+                          option Fair
+                          option Hard
+                          option Very Hard   
+                    #form-group
+                        label Servings:
+                        input.form-control(name='servings', type='text' value=recipe.servings)
+                    
+                    input.btn.btn-primary(type='submit', value='Submit')
+                    a.btn.btn-danger(href='/recipes') Cancel                                             
