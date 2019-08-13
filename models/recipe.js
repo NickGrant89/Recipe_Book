@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// User schema
+// Recipe schema
 
 const DirectionsSchema = mongoose.Schema({
     
@@ -64,6 +64,7 @@ const RecipeSchema = mongoose.Schema({
     },
     ingredients:[IngredientsSchema],
     directions:[DirectionsSchema],
+    allergies:[],
 });
 
 

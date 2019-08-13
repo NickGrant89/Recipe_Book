@@ -17,6 +17,43 @@ let Company = require('../models/company');
 //Site Model
 let Site = require('../models/site');
 
+
+
+//Register new user 
+router.get('/registerNewuser',  function(req, res){
+    let user = new User();
+  user.admin = 'SuperAdmin';
+  user.name = 'rv';
+  user.email = 'rv@rv.com';
+  user.company = 'req.body.company';
+  user.phone = 'req.body.phone';
+  user.username = 'req.body.username';
+  user.password = 'rv';
+  user.password2 = 'req.body.password2';
+
+  //console.log(user);
+
+  bcrypt.genSalt(10, function(errors, salt){
+        bcrypt.hash(user.password, salt, function(err, hash){
+            if(errors){
+                console.log(err);
+            }else{
+                user.password = hash;
+                //console.log(hash)
+
+                user.save(function(err){
+                    if(errors){
+                        console.log(err);
+                        return;
+                    }else{
+                        
+                        console.log(user);
+                    }
+                });
+            }
+        });
+    });
+});
 //login Form
 router.get('/login', function(req, res){
     res.render('login', {title:'Login'});
@@ -252,5 +289,7 @@ router.post('/register', [
         });
     });
 });
+
+
 
 module.exports = router;

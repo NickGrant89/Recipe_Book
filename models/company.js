@@ -35,6 +35,9 @@ const CompanySchema = mongoose.Schema({
         phone: {type: String},
         mobile: {type: String},
     },
+    setting:{
+        
+    }
 });
 
 

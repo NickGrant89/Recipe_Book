@@ -51,8 +51,43 @@ router.get('/', ensureAuthenticated, function(req, res){
 //Get single Recipe page
 router.get('/:id', ensureAuthenticated, (req, res) => {
     Recipe.findById(req.params.id, function(err, recipe){
+        console.log(recipe.allergies)
+
+        var a = hello(recipe);
+
+        function hello(s) {
+            var a = []; 
+            var b = ["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"];
+            for(var o = 0; o < b.length; o++) {
+
+                    a.push(hello2(b[o])); 
+                    //console.log(b[o]);
+                }
+            console.log(a);
+            return a;
+  
+        }
+        function hello2(s1) {
+            if(recipe.allergies == null){return false};
+            //var b = ["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"];
+                for(var i = 0; i < recipe.allergies.length; i++) {
+                    console.log(recipe.allergies[i] + ' ' + s1 + ' ' + i);
+                    if(recipe.allergies[i] == s1){
+                        
+                        return true;
+                    }
+                    
+                    
+                }
+                return false;
+        }   
+
+
+
             res.render('recipe',{
                 recipe:recipe,
+                //checked:a,
+                a:a,
 
             });
             //console.log(recipe)
@@ -79,7 +114,7 @@ router.post('/add', upload.single('image'),[
     req.flash('danger', 'Please try again' ,{errors:errors.mapped()} );
     res.redirect('/');
     console.log(req.file);
-   return { errors: errors.mapped() };
+   return { errors: errors.withMessage()};
   }
   let recipe = new Recipe();
     recipe.title = req.body.title;
@@ -90,7 +125,8 @@ router.post('/add', upload.single('image'),[
     recipe.servings = req.body.servings;
     recipe.ingredients = req.body.ingredients;
     recipe.directions = req.body.directions;
-    //console.log(req.body.path);
+    recipe.allergies = req.body.allergies;
+    console.log(req.body.allergies);
 
   recipe.save(function(err){
        if(err){
@@ -113,6 +149,9 @@ router.post('/edit/:id', ensureAuthenticated,  (req, res) => {
     recipe.timetocook = req.body.timetocook;
     recipe.dfficulty = req.body.dfficulty;
     recipe.servings = req.body.servings;
+    recipe.allergies = req.body.allergies;
+
+    console.log(req.body.allergies)
   
     let query = {_id:req.params.id}
 
@@ -125,7 +164,7 @@ router.post('/edit/:id', ensureAuthenticated,  (req, res) => {
              res.redirect('/recipes/'+ req.params.id)
          }
     });
-    console.log(req.body.title)
+
  });
 
 //Edit Image
@@ -241,6 +280,56 @@ var subdoc = recipe.directions[0];
 });
 });
 
+//Add allergies to recipe.
+
+router.post('/allergies/edit/:id',[
+    //Name
+    check('description').isLength({min:1}).trim().withMessage('PC Name required'),
+    //Company
+    check('amount').isLength({min:1}).trim().withMessage('IP Address required'),
+    //Username
+    check('measurements').isLength({ min: 1}),
+    // username must be an email
+    
+], (req, res) => {
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    req.flash('danger', 'Please try again' ,{errors:errors.mapped()} );
+    res.redirect('/');
+    console.log(req.params.id);
+   return { errors: errors.mapped() };
+  }
+  console.log(req.params.id);
+  Recipe.findById(req.params.id, function(err, recipe){
+    
+// create a comment
+recipe.allergies.push({ 
+    description : req.body.description,
+    amount: req.body.amount,
+    measurements: req.body.measurements,
+});
+var subdoc = recipe.allergies[0];
+ console.log(subdoc) // { _id: '501d86090d371bab2c0341c5', name: 'Liesl' }
+ subdoc.isNew; // true
+ let query = {_id:req.params.id}
+
+   Recipe.update(query, recipe, function(err){
+     if(err){
+         console.log(err);
+        
+         return;
+     }
+     else{
+        req.flash('success', ' Added')
+        res.redirect('/recipes/'+ recipe._id)
+    }
+
+});
+
+});
+});
+
 //Delete ingredients 
 router.delete('/ingredients/:id/:id2', ensureAuthenticated, (req, res) => {
     console.log(req.params.id2)
@@ -315,6 +404,12 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
             /* if(device.owner != req.user._id){
                 res.status(500).send();
             }else{ */
+                try {
+                    fs.unlink('/'+recipe.image)
+                    //file removed
+                  } catch(err) {
+                    console.error(err)
+                  }    
                 Recipe.deleteOne(query, function(err){
                     if(err){
                         console.log(err)
@@ -323,6 +418,7 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
                 });
             //}
         });
+        
         
     });
 

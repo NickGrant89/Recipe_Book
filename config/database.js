@@ -1,6 +1,6 @@
 //Database connection
 
 module.exports = {
-    database:'mongodb://onec:Onec2018!@ds111279.mlab.com:11279/onecenterprise',
+    database:'mongodb+srv://RecipeVault_Admin:h9VDs0x7cNYkYwjG@recipevault-k3pwj.mongodb.net/RecipeVault?retryWrites=false&w=majority',
     secret:''
 }

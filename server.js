@@ -10,9 +10,18 @@ const session = require('express-session');
 const config = require('./config/database')
 const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
+const fs = require('fs');
+const csv = require('fast-csv');
 
 const helmet = require('helmet');
+const parse = csv.parse();
+const pugpdf = require('pug-pdf');
 
+/* fs.createReadStream('./data.csv')
+    .pipe(csv.parse({ headers: true }))
+    .on('data', row => console.log(row)) */
+
+  
 
 // This calls the Device model to intergate the DB
 
@@ -29,14 +38,17 @@ let Recipe = require('./models/recipe');
 
 // Call Moongoose connection
 const mongoose = require('mongoose');
-mongoose.connect(config.database,{ useNewUrlParser: true });
+mongoose.connect(config.database, {useNewUrlParser: true});
 
 // Starting DB connection
 
 let db = mongoose.connection;
 
-db.once('open', function(){
+db.once('open', function(err){
     console.log('MongoDB Live');
+    if(err){
+        console.log(err)
+    }
 
 })
 
@@ -59,6 +71,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/uploads', express.static('uploads'));
+
 
 // parse application/json
 app.use(bodyParser.json())
@@ -156,6 +169,7 @@ app.get('/', ensureAuthenticated, function(req, res){
     });
 });
 });
+
 
 // Route File
 

@@ -10,54 +10,20 @@ let Site = require('../models/site');
 
 let User = require('../models/user');
 
-router.get('/', ensureAuthenticated, function(req, res){
-    res.render('company', {
-    title:'Add Company',
-
-    });
-});
-
 //Get single company page
-router.get('/:id', ensureAuthenticated, (req, res) => {
-    Company.find({}, function(err, companies){
-    Company.findById(req.params.id, function(err, company){
-        User.findById(req.user.id, function(err, user){
-            if(err){res.redirect('/');}
-            if(user.admin == 'Super Admin'){
-                const q = ({"company": company.name});
-                Site.find(q, function(err, sites){
-                    if(err){
-                        console.log(err)
-                    }else{
-                        res.render('company', {
-                            title: company.name,
-                            sites:sites,
-                            company:company,
-                            companies:companies,
-                        });
-                    }
-                });
-            }
-            if(user.admin == 'Admin' || 'User'){
-                const q = ({"name": user.sites});
-                //console.log(q);
-                Site.find(q, function(err, sites){
-                    if(err){
-                        console.log(err)
-                    }else{
-                        //console.log(company)
-                        res.render('company', {
-                            title: company.name,
-                            sites:sites,
-                            company:company,
-                            companies:companies,
-                        });
-                    }
-                });
-            }
+router.get('/settings', ensureAuthenticated, (req, res) => {
+    User.findById(req.user.id, function(err, user){
+    Company.find({'name':user.company}, function(err, company){
+        
+        res.render('settings', {
+            title:'Company',
+    
         });
+        console.log(user.company)
+        console.log(company)
     });
 });
+
 });
 
 

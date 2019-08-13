@@ -6,13 +6,22 @@ block content
         .row
           // Title
           .col-12
-            h2
-              =recipe.title
+            .row
+              h2
+                =recipe.title
+                |     - 
+                each al, i in recipe.allergies
+                  h2
+                    =al
+                    |     - 
+                    br
+                
+
         .row.vertical-align
           .col-12
             // Picture
             .col-md-8.pull-left.wow.swing
-              img.recipe-picture(src='/'+recipe.image, alt='bbq-pork-ribs')
+              img.recipe-picture(src='/'+recipe.image, alt=recipe.title)
               a(href='#changeImage', data-toggle='modal', data-target='#changeImage')|   Change Image
             // Info
             .col-md-4.pull-right.wow.lightSpeedIn
@@ -203,6 +212,82 @@ block content
                     #form-group
                         label Servings:
                         input.form-control(name='servings', type='text' value=recipe.servings)
-                    
+                    br    
+                    #form-group
+                        label Allergies:
+                          .row
+                            .col-6
+                              .form-check
+                                input.form-check-input(name='allergies' type='checkbox', value='Gluten' checked=a[0])
+                                |   
+                                label.form-check-label
+                                  | Gluten
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Peanuts' checked=a[1])
+                                  |   
+                                  label.form-check-label
+                                    | Peanuts
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Tree_Nuts' checked=a[2])
+                                  |   
+                                  label.form-check-label
+                                    | Tree Nuts
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Celery' checked=a[3])
+                                  |   
+                                  label.form-check-label
+                                    | Celery
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Mustard' checked=a[4])
+                                  |   
+                                  label.form-check-label
+                                    | Mustard
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Eggs' checked=a[5])
+                                  |   
+                                  label.form-check-label
+                                    | Eggs
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Milk' checked=a[6])
+                                  |   
+                                  label.form-check-label
+                                    | Milk
+                            .col-6        
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Sesame' checked=a[7])
+                                  |   
+                                  label.form-check-label
+                                    | Sesame
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Fish' checked=a[8])
+                                  |   
+                                  label.form-check-label
+                                    | Fish
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Crustaceans' checked=a[9])
+                                  |   
+                                  label.form-check-label
+                                    | Crustaceans
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Molluscs' checked=a[10])
+                                  |   
+                                  label.form-check-label
+                                    | Molluscs
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Soya' checked=a[11])
+                                  |   
+                                  label.form-check-label
+                                    | Soya
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Sulphites' checked=a[12])
+                                  |   
+                                  label.form-check-label
+                                    | Sulphites
+                              .form-check
+                                  input.form-check-input(name='allergies' type='checkbox', value='Lupin' checked=a[13])
+                                  |   
+                                  label.form-check-label
+                                    | Lupin
+                              br      
                     input.btn.btn-primary(type='submit', value='Submit')
                     a.btn.btn-danger(href='/recipes') Cancel                                             
