@@ -17,6 +17,14 @@ exports.deCodeed = function (token) {
 };
 
 
+exports.checkValue = function (value1, value2) {
+    if(value1 == value2){
+    console.log(value1 + ' ' + value2);
+        return true;
+    }
+    return false;
+      
+};
 
 
 //Validation for company

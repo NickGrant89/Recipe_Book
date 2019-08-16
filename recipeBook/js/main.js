@@ -82,6 +82,15 @@ $(document).ready(function(){
     });
 });
 
+new Picker(document.querySelector('.js-time-picker'), {
+    format: 'HH:mm',
+    headers: true,
+    text: {
+      title: 'Pick a time',
+    },
+  });
+
+
 (function ($) {
     "use strict";
 

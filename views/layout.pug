@@ -17,6 +17,7 @@ html(lang='en')
     link(rel='stylesheet', type='text/css', href='/css/font-awesome.min.css')
     link(rel='stylesheet', type='text/css', href='/css/animate.min.css')
     link(rel='stylesheet', type='text/css', href='/css/styles.css')
+    link(href='/css/picker.css', rel='stylesheet')
     //
       Modernizr file
       ===================
@@ -31,7 +32,7 @@ html(lang='en')
 
 
     nav.navbar.navbar-expand-lg.navbar-light.bg-light
-      a.navbar-brand(href='#') Navbar
+      a.navbar-brand(href='#') Recipe Vault
       button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNavDropdown', aria-controls='navbarNavDropdown', aria-expanded='false', aria-label='Toggle navigation')
         span.navbar-toggler-icon
       #navbarNavDropdown.collapse.navbar-collapse
@@ -39,9 +40,7 @@ html(lang='en')
           li.nav-item.active
             a.nav-link(href='/recipes') 
               | Recipes
-              span.sr-only (current)    
-          li.nav-item
-            a.nav-link(href='/categories') Categories
+              span.sr-only (current)
           li.nav-item
             a.nav-link(href='/users') Users  
           li.nav-item
@@ -53,7 +52,7 @@ html(lang='en')
       .container.text-right.wow.pulse
         img(src='/images/logo-white.svg', alt='logo')
         br
-        h1 Recipe Book
+        h1 Recipe Vault
     //
     != messages('message', locals)
     block content
@@ -73,3 +72,4 @@ html(lang='en')
     script(charset='utf-8', src='/js/wow.min.js')
     script(charset='utf-8', src='/js/scripts.js')
     script(charset='utf-8', src='/js/main.js')
+    script(charset='utf-8', src='/js/picker.js')

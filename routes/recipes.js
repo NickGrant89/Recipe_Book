@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
+const functions = require('../middleware/onec-functions');
 
 //Image Upload Function
 const storage = multer.diskStorage({
@@ -51,9 +52,13 @@ router.get('/', ensureAuthenticated, function(req, res){
 //Get single Recipe page
 router.get('/:id', ensureAuthenticated, (req, res) => {
     Recipe.findById(req.params.id, function(err, recipe){
-        console.log(recipe.allergies)
-
+        //console.log(recipe.allergies)
+        
         var a = hello(recipe);
+
+        //var a = functions.checkArray(["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"], recipe.allergies );
+
+        console.log(a);
 
         function hello(s) {
             var a = []; 
@@ -69,25 +74,32 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
         }
         function hello2(s1) {
             if(recipe.allergies == null){return false};
-            //var b = ["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"];
                 for(var i = 0; i < recipe.allergies.length; i++) {
-                    console.log(recipe.allergies[i] + ' ' + s1 + ' ' + i);
+                    //console.log(recipe.allergies[i] + ' ' + s1 + ' ' + i);
                     if(recipe.allergies[i] == s1){
                         
                         return true;
                     }
-                    
-                    
                 }
                 return false;
         }   
 
 
-
+            if(recipe.allergies == null){
+                var s = [];
+            }
+            else{
+                var s = recipe.allergies;
+            }
             res.render('recipe',{
                 recipe:recipe,
-                //checked:a,
+                s:s,
                 a:a,
+                veryeasy:functions.checkValue(recipe.dfficulty, 'Very Easy'),
+                easy:functions.checkValue(recipe.dfficulty, 'Easy'),
+                fair:functions.checkValue(recipe.dfficulty, 'Fair'),
+                hard:functions.checkValue(recipe.dfficulty, 'Hard'),
+                veryhard:functions.checkValue(recipe.dfficulty, 'Very Hard'),
 
             });
             //console.log(recipe)
