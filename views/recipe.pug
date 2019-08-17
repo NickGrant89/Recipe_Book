@@ -81,7 +81,7 @@ block content
                   li 
                     = recipes.description
                     |       - 
-                    a(href='#editDirections', data-toggle='modal', data-target='#editDirections')|   Edit
+                    a(href='#editDirections'+recipes.id, data-toggle='modal', data-target='#editDirections')|   Edit
                     |       |
                     a.directions-delete(href='#' data-id=recipes._id data-age=recipe._id)|   Delete
                 
@@ -120,6 +120,21 @@ block content
                           br
                       input.btn.btn-primary(type='submit', value='Save')
                       a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel  
+  #changeImage.modal.fade(tabindex='-1', role='dialog', aria-labelledby='changeImageLabel', aria-hidden='true')
+    .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+                h5#changeImageLabel.modal-title Change Image
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true')
+            .modal-body
+                form(method='POST', action='/recipes/image/edit/'+recipe.id enctype="multipart/form-data")
+                    #form-group
+                        label Image:
+                        input.form-control(type='file', name='image')
+                        br
+                    input.btn.btn-primary(type='submit', value='Save')
+                    a.btn.btn-danger(href='/recipes/'+recipe._id) Cancel                     
   #editIngredients.modal.fade(tabindex='-1', role='dialog', aria-labelledby='editIngredientsLabel', aria-hidden='true')
       .modal-dialog(role='document')
           .modal-content
@@ -290,6 +305,15 @@ block content
                                   |   
                                   label.form-check-label
                                     | Lupin
-                              br      
+                    #form-group
+                        label Sites:
+                          .row
+                            .col-12
+                              each site, i in sites
+                                .form-check
+                                  input.form-check-input(name='sites' type='checkbox', value=site.name checked=b[i])
+                                  |   
+                                  label.form-check-label
+                                    = site.name               
                     input.btn.btn-primary(type='submit', value='Submit')
                     a.btn.btn-danger(href='/recipes') Cancel                                             

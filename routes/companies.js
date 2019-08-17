@@ -14,9 +14,12 @@ let User = require('../models/user');
 router.get('/settings', ensureAuthenticated, (req, res) => {
     User.findById(req.user.id, function(err, user){
     Company.find({'name':user.company}, function(err, company){
+        Site.find({'company':req.user.company}, 'name', function(err, sites){
         
         res.render('settings', {
             title:'Company',
+            sites:sites,
+            company:company,
     
         });
         console.log(user.company)
@@ -24,6 +27,7 @@ router.get('/settings', ensureAuthenticated, (req, res) => {
     });
 });
 
+});
 });
 
 

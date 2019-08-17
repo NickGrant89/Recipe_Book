@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const functions = require('../middleware/onec-functions');
 
+
 //Image Upload Function
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
@@ -52,60 +53,24 @@ router.get('/', ensureAuthenticated, function(req, res){
 //Get single Recipe page
 router.get('/:id', ensureAuthenticated, (req, res) => {
     Recipe.findById(req.params.id, function(err, recipe){
-        //console.log(recipe.allergies)
-        
-        var a = hello(recipe);
-
-        //var a = functions.checkArray(["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"], recipe.allergies );
-
-        console.log(a);
-
-        function hello(s) {
-            var a = []; 
-            var b = ["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"];
-            for(var o = 0; o < b.length; o++) {
-
-                    a.push(hello2(b[o])); 
-                    //console.log(b[o]);
-                }
-            console.log(a);
-            return a;
-  
-        }
-        function hello2(s1) {
-            if(recipe.allergies == null){return false};
-                for(var i = 0; i < recipe.allergies.length; i++) {
-                    //console.log(recipe.allergies[i] + ' ' + s1 + ' ' + i);
-                    if(recipe.allergies[i] == s1){
-                        
-                        return true;
-                    }
-                }
-                return false;
-        }   
-
-
-            if(recipe.allergies == null){
-                var s = [];
-            }
-            else{
-                var s = recipe.allergies;
-            }
-            res.render('recipe',{
-                recipe:recipe,
-                s:s,
-                a:a,
-                veryeasy:functions.checkValue(recipe.dfficulty, 'Very Easy'),
-                easy:functions.checkValue(recipe.dfficulty, 'Easy'),
-                fair:functions.checkValue(recipe.dfficulty, 'Fair'),
-                hard:functions.checkValue(recipe.dfficulty, 'Hard'),
-                veryhard:functions.checkValue(recipe.dfficulty, 'Very Hard'),
-
-            });
-            //console.log(recipe)
+        Site.find({'company':req.user.company}, 'name', function(err, sites){
+            if(sites == null){sites = {}}
+            if(recipe.allergies == null){recipe.allergies = [];}
+                res.render('recipe',{
+                    recipe:recipe,
+                    s:recipe.allergies,
+                    a:functions.checkAllergies( recipe.allergies),
+                    b:functions.checkArray(sites, recipe.sites),
+                    veryeasy:functions.checkValue(recipe.dfficulty, 'Very Easy'),
+                    easy:functions.checkValue(recipe.dfficulty, 'Easy'),
+                    fair:functions.checkValue(recipe.dfficulty, 'Fair'),
+                    hard:functions.checkValue(recipe.dfficulty, 'Hard'),
+                    veryhard:functions.checkValue(recipe.dfficulty, 'Very Hard'),
+                    sites:sites,
+                });
         });
-
     });
+});
 
 
 
@@ -138,7 +103,8 @@ router.post('/add', upload.single('image'),[
     recipe.ingredients = req.body.ingredients;
     recipe.directions = req.body.directions;
     recipe.allergies = req.body.allergies;
-    console.log(req.body.allergies);
+    recipe.company = req.user.company;
+    //console.log(req.body.allergies);
 
   recipe.save(function(err){
        if(err){
@@ -162,8 +128,9 @@ router.post('/edit/:id', ensureAuthenticated,  (req, res) => {
     recipe.dfficulty = req.body.dfficulty;
     recipe.servings = req.body.servings;
     recipe.allergies = req.body.allergies;
+    recipe.sites = req.body.sites;
 
-    console.log(req.body.allergies)
+    //console.log(req.body.allergies)
   
     let query = {_id:req.params.id}
 

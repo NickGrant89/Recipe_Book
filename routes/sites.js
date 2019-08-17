@@ -49,7 +49,7 @@ router.post('/add', ensureAuthenticated, [
   site.postcode = req.body.postcode;
   site.country = req.body.country;
   site.phonenumber = req.body.phonenumber;
-  site.company = req.body.company;
+  site.company = req.user.company;
 
 
   site.save(function(err){
@@ -59,7 +59,7 @@ router.post('/add', ensureAuthenticated, [
        }
        else{
            req.flash('success', 'Site Added')
-           res.redirect('/sites')
+           res.redirect('/')
        }
   });
 

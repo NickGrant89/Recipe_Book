@@ -6,43 +6,43 @@ const SiteSchema = mongoose.Schema({
     
     name:{
         type: String,
-        required: true
+        required: false
     },
     address:{
         type: String,
-        required: true
+        required: false
     },
     city:{
         type: String,
-        required: true
+        required: false
     },
     county:{
         type: String,
-        required: true
+        required: false
     },
     postcode:{
         type: String,
-        required: true
+        required: false
     },
     country:{
         type: String,
-        required: true
+        required: false
     },
     email:{
         type: String,
-        required: true
+        required: false
     },
     phonenumber:{
         type: String,
-        required: true
+        required: false
     },
     status:{
         type: String,
-        required: true
+        required: false
     },
     company:{
         type: String,
-        required: true
+        required: false
     }
 });
 

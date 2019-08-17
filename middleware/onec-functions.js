@@ -19,11 +19,54 @@ exports.deCodeed = function (token) {
 
 exports.checkValue = function (value1, value2) {
     if(value1 == value2){
-    console.log(value1 + ' ' + value2);
+    //console.log(value1 + ' ' + value2);
         return true;
     }
     return false;
       
+};
+
+exports.checkArray = function (sites, checkArray) {
+    var a = []; 
+    var b = sites;
+    for(var o = 0; o < b.length; o++) {
+        a.push(hello4(b[o].name));
+        //console.log(b[o].name)
+    }
+
+    function hello4(s1) {
+        if(checkArray == null){return false};
+        //console.log(s1 + ' '+ checkArray)
+            for(var i = 0; i < checkArray.length; i++) {
+                if(checkArray[i] == s1){
+                    
+                    return true;
+                }
+                
+            }
+            return false;
+    }   
+       
+    return a;  
+};
+
+exports.checkAllergies = function (allergiesArray) {
+        var a = []; 
+            var b = ["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"];
+            for(var o = 0; o < b.length; o++) {
+                a.push(hello2(b[o]));
+            }
+          
+            function hello2(s1) {
+                if(allergiesArray == null){return false};
+                    for(var i = 0; i < allergiesArray.length; i++) {
+                        if(allergiesArray[i] == s1){
+                            return true;
+                        }
+                    }
+                    return false;
+            }   
+        return a;
 };
 
 

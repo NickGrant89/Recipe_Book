@@ -65,6 +65,7 @@ const RecipeSchema = mongoose.Schema({
     ingredients:[IngredientsSchema],
     directions:[DirectionsSchema],
     allergies:[],
+    sites:[],
 });
 
 
