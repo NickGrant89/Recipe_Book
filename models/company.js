@@ -5,31 +5,31 @@ const mongoose = require('mongoose');
 const CompanySchema = mongoose.Schema({
     name:{
         type: String,
-        required: true
+        required: false
     },
     email:{
         type: String,
-        required: true
+        required: false
     },
     address:{
         type: String,
-        required: true
+        required: false
     },
     city:{
         type: String,
-        required: true
+        required: false
     },
     county:{
         type: String,
-        required: true
+        required: false
     },
     postcode:{
         type: String,
-        required: true
+        required: false
     },
     country:{
         type: String,
-        required: true
+        required: false
     },
     phonenumber:{
         phone: {type: String},

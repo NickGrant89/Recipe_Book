@@ -13,13 +13,15 @@ let User = require('../models/user');
 //Get single company page
 router.get('/settings', ensureAuthenticated, (req, res) => {
     User.findById(req.user.id, function(err, user){
-    Company.find({'name':user.company}, function(err, company){
-        Site.find({'company':req.user.company}, 'name', function(err, sites){
+    Company.findOne({'name':user.company}, function(err, company){
+        Site.find({'company':user.company}, 'name', function(err, sites){
+            Site.find({'company':req.user.company}, function(err, site){
         
         res.render('settings', {
             title:'Company',
             sites:sites,
             company:company,
+            site:site,
     
         });
         console.log(user.company)
@@ -27,6 +29,7 @@ router.get('/settings', ensureAuthenticated, (req, res) => {
     });
 });
 
+});
 });
 });
 

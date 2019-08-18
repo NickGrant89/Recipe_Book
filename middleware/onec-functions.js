@@ -69,6 +69,28 @@ exports.checkAllergies = function (allergiesArray) {
         return a;
 };
 
+exports.checkAllergiesImages = function (allergiesArray) {
+    var a = []; 
+        
+        for(var o = 0; o < allergiesArray.length; o++) {
+            a.push(hello2(allergiesArray[o]));
+        }
+      
+        function hello2(s1) {
+            var b = ["Gluten","Peanuts","Tree_Nuts","Celery","Mustard","Eggs","Milk","Sesame","Fish","Crustaceans","Molluscs","Soya","Sulphites","Lupin"];
+            if(allergiesArray == null){return false};
+                for(var i = 0; i < b.length; i++) {
+                    if(b[i] == s1){
+                        var path = '/images/allergen/' + b[i] +'.png'
+                        var path2 = {image:'/images/allergen/' + b[i] +'.png', title:b[i]}
+                        return path2;
+                    }
+                }
+                return null;
+        }   
+    return a;
+};
+
 
 //Validation for company
 

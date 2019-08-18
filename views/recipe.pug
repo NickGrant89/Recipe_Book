@@ -12,8 +12,7 @@ block content
                 |     - 
                 each al, i in s
                   h2
-                    =al
-                    |     - 
+                    img.recipe-allergies(src=al.image, alt='' data-toggle="tooltip" data-placement="top" title='Contains'+' '+al.title)
                     br
                 
 
@@ -40,7 +39,7 @@ block content
                 .row
                   .col-2.text-center
                     i.fa.fa-area-chart(aria-hidden='true')
-                  .col-6 Difficulty -
+                  .col-6 Difficulty - 
                     = recipe.dfficulty
                   .col-4
                     i.fa.fa-star(aria-hidden='true')
@@ -215,7 +214,7 @@ block content
                     #form-group
                         label Time To Cook:
                         //input.form-control(name='timetocook', type='text' value=recipe.timetocook)
-                        input.form-control.js-time-picker(name='timetocook' type='text', value='02:56')
+                        input.form-control.js-time-picker(name='timetocook' type='text', value='02:56' id="input")
 
                     #form-group
                         label Dfficulty

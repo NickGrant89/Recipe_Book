@@ -3,11 +3,13 @@ const router = express.Router();
 const multer = require('multer');
 const functions = require('../middleware/onec-functions');
 
+// include node fs module
+var fs = require('fs');
 
 //Image Upload Function
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, './uploads/');
+        cb(null, './uploads/' + req.user.company + '/');
     },
     filename: function(req, file, cb ){
         cb(null, new Date().toISOString() + file.originalname);
@@ -41,14 +43,14 @@ let Recipe = require('../models/recipe');
 
 //GET All Recipes
 router.get('/', ensureAuthenticated, function(req, res){
-    Recipe.find({}, function(err, recipes){
-                    res.render('recipes', {
-                        title:'Recipes',
-                        recipes: recipes,
-                    });
-                
-            });
+    Recipe.find({'company':req.user.company}, function(err, recipes){
+        res.render('recipes', {
+            title:'Recipes',
+            recipes: recipes,
         });
+        
+    });
+});
 
 //Get single Recipe page
 router.get('/:id', ensureAuthenticated, (req, res) => {
@@ -56,9 +58,12 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
         Site.find({'company':req.user.company}, 'name', function(err, sites){
             if(sites == null){sites = {}}
             if(recipe.allergies == null){recipe.allergies = [];}
+                
+                console.log(functions.checkAllergiesImages( recipe.allergies));
+                console.log(functions.checkValue(recipe.dfficulty, 'Very Easy'));
                 res.render('recipe',{
                     recipe:recipe,
-                    s:recipe.allergies,
+                    s:functions.checkAllergiesImages( recipe.allergies),
                     a:functions.checkAllergies( recipe.allergies),
                     b:functions.checkArray(sites, recipe.sites),
                     veryeasy:functions.checkValue(recipe.dfficulty, 'Very Easy'),
@@ -148,21 +153,31 @@ router.post('/edit/:id', ensureAuthenticated,  (req, res) => {
 
 //Edit Image
 router.post('/image/edit/:id', ensureAuthenticated, upload.single('image'), (req, res) => {
+    Recipe.findById(req.params.id, function(err, recipeImage){
+        console.log(recipeImage)
     let recipe = {};
     recipe.image = req.file.path;
   
     let query = {_id:req.params.id}
-
+         // delete file named 'sample.txt'
+        fs.unlink('./'+ recipeImage.image, function (err) {
+            if (err) {console.log(err)};
+            // if no error, file has been deleted successfully
+            console.log('File deleted!');
+        })  
     Recipe.updateOne(query, recipe, function(err){
          if(err){
              console.log(err);
              return;
          }
          else{
+             
              res.redirect('/recipes/'+ req.params.id)
          }
     });
+     
  });
+});
 
 //Add ingredients to recipe.
 
@@ -378,17 +393,17 @@ router.delete('/:id', ensureAuthenticated, (req, res) => {
     console.log(query)
 
     
-
+  
     Recipe.findById({_id:req.params.id}, function(err, recipe){
             /* if(device.owner != req.user._id){
                 res.status(500).send();
             }else{ */
-                try {
-                    fs.unlink('/'+recipe.image)
-                    //file removed
-                  } catch(err) {
-                    console.error(err)
-                  }    
+                  // delete file named 'sample.txt'
+                    fs.unlink('./uploads/'+ recipe.company + recipe.image, function (err) {
+                        if (err) {console.log(err)};
+                        // if no error, file has been deleted successfully
+                        console.log('File deleted!');
+                    });    
                 Recipe.deleteOne(query, function(err){
                     if(err){
                         console.log(err)

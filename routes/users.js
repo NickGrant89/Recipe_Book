@@ -3,6 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 
+// include node fs module
+var fs = require('fs');
+
 //Passport Config
 require('../config/passport')(passport);
 
@@ -18,7 +21,12 @@ let Company = require('../models/company');
 let Site = require('../models/site');
 
 
+ //Get register form
+ router.get('/register',  function(req, res){
+    res.render('register',{
 
+    });   
+});
 //Register new user 
 router.get('/registerNewuser',  function(req, res){
     let user = new User();
@@ -29,8 +37,17 @@ router.get('/registerNewuser',  function(req, res){
   user.phone = '07563413380';
   user.password = 'rv';
 
-  //console.log(user);
+  let company = new Company();
+  company.name = 'Recipe Vault';
 
+  company.save(function(err){
+    if(err){
+        console.log(err);
+        return;
+    }else{
+        
+    }
+});
   bcrypt.genSalt(10, function(errors, salt){
         bcrypt.hash(user.password, salt, function(err, hash){
             if(errors){
@@ -132,42 +149,6 @@ router.get('/:id', ensureAuthenticated, (req, res) => {
 });
 });
 
- //Get register form
-router.get('/register', ensureAuthenticated,  function(req, res){
-    User.findById(req.user.id, function(err, user){
-        if(err){
-            console.log(err)
-        }
-        if(user.admin == 'Super Admin'){
-            Company.find({}, function(err, companies){
-                Site.find({}, function(err, sites){
-                    res.render('register', {
-                        title:'Create User',
-                        companies: companies,
-                        sites: sites,
-                    });
-                });
-            });
-        }
-        else{
-            const q = {'company': user.company} 
-            Company.find({'name': user.company}, function(err, companies){
-                Site.find({q}, function(err, sites){
-                    res.render('register', {
-                        title:'Create User',
-                        companies: companies,
-                        sites: sites,
-                    });
-                });
-            });
-            
-        }
-    });
-});
-
-
-
-
 
 
 //Login Function
@@ -221,16 +202,20 @@ router.post('/register', [
     check('name').isLength({min:3}).trim().withMessage('Name required'),
     //Company
     check('company').isLength({min:1}).trim().withMessage('Company required'),
-    //Company
-    check('phone').isLength({min:1}).trim().withMessage('Phone Number required'),
-    //Username
-    check('username').isLength({ min: 1}),
-    // username must be an email
+    //Email
     check('email').isEmail(),
     // password must be at least 5 chars long
     check('password').isLength({ min: 8 }),
 
     //check('password2').equals('password')
+    check('email').custom(value => {
+        return User.findByEmail(value).then(user => {
+          if (user) {
+              console.log(user);
+            return req.flash(('E-mail already in use') );
+          }
+        });
+      }),
 ], (req, res) => {
 
 
@@ -239,11 +224,13 @@ router.post('/register', [
   if (!errors.isEmpty()) {
     req.flash('danger', 'Please try again' ,{errors:errors.mapped()} );
     res.redirect('/users');
+    console.log(validationResult);
+    
     User.find({email:req.body.email}, function(err, user){
         if(user.length >= 1){
         }
                 
-            });
+        });
     //res.render('register',)
 
    return { errors: errors.mapped() };
@@ -261,7 +248,22 @@ router.post('/register', [
   user.password = req.body.password;
   user.password2 = req.body.password2;
 
-  console.log(user);
+  let company = new Company();
+  company.name = req.body.company;
+
+  company.save(function(err){
+    if(errors){
+        console.log(err);
+        return;
+    }else{
+        
+    }
+});
+if (!fs.existsSync('./uploads/'+req.body.company)){
+    fs.mkdirSync('./uploads/'+req.body.company);
+}
+
+  //console.log(user);
 
   bcrypt.genSalt(10, function(errors, salt){
         bcrypt.hash(user.password, salt, function(err, hash){

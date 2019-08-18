@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     $('.recipe-delete').on('click', function(e){
         $target = $(e.target);
@@ -81,15 +82,18 @@ $(document).ready(function(){
 
     });
 });
+$(document).ready(function(){
+    $('.directions-delete').on('click', function(e){
+var input = document.getElementById('input');
+var picker = new Picker(input, {
+  format: 'YYYY/MM/DD HH:mm',
+});
+});
+});
 
-new Picker(document.querySelector('.js-time-picker'), {
-    format: 'HH:mm',
-    headers: true,
-    text: {
-      title: 'Pick a time',
-    },
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
   });
-
 
 (function ($) {
     "use strict";

@@ -48,6 +48,7 @@ block content
             .container
               br
               col-lg-12.mb-4
+                // DataTales Example
                 .card.shadow.mb-4
                   .card-header.py-3
                     h6.m-0.font-weight-bold.text-primary Sites - 
@@ -67,20 +68,32 @@ block content
                             th Contact
                             th Status
                         tbody
-                          each site, i in sites
-                          
-                            td  
-                              = site.name
+                          each sites, i in site
+                            tr.odd.gradeX
+                              td  
+                                = sites.id
+                              td  
+                                = sites.name
+                              td
+                                = sites.address
+                              td
+                                = sites.city
+                              td  
+                                = sites.county
+                              td
+                                = sites.postcode
+                              td
+                                = sites.country   
+                              td
+                                = sites.phonenumber
+                              td
+                                = sites.status  
+                
                           
           #nav-contact.tab-pane.fade(role='tabpanel', aria-labelledby='nav-contact-tab')
             .container
               | hfjkdhfsdkj
-
-
-
-
-
-         
+              
     // /.container-fluid
     // End of Main Content
     #addRecipe.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addUserLabel', aria-hidden='true')
