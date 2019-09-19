@@ -10,11 +10,11 @@ const session = require('express-session');
 const config = require('./config/database')
 const passport = require('passport');
 const MongoStore = require('connect-mongo')(session);
-const fs = require('fs');
-const csv = require('fast-csv');
+const Functions1 = require('./middleware/onec-functions');
+
+
 
 const helmet = require('helmet');
-const parse = csv.parse();
 const pugpdf = require('pug-pdf');
 
 /* fs.createReadStream('./data.csv')
@@ -137,11 +137,7 @@ app.get('/', ensureAuthenticated, function(req, res){
     Site.find({'name': user.sites}, function(err, sites){
         User.find({}, function(err, users){
             Company.find({}, function(err, companies){
-            Company.countDocuments({'name':user.company}, function(err, numOfCompanies) {
-                Site.countDocuments({'name': user.sites}, function(err, numOfSites) {
                     Recipe.find({}, function(err, recipes) {
-                        User.countDocuments({'company': user.company}, function(err, numOfUsers) {
-                       
                             if(err){
                                 console.log(err)
                             }
@@ -151,9 +147,7 @@ app.get('/', ensureAuthenticated, function(req, res){
                                     sites: sites,
                                     users:users,
                                     companies:companies,
-                                    numOfCompanies: numOfCompanies,
-                                    numOfSites: numOfSites,
-                                    numOfUsers:numOfUsers,
+                                    
                                     recipes:recipes,
                                     
             
@@ -166,9 +160,6 @@ app.get('/', ensureAuthenticated, function(req, res){
             });
         });
         });         
-    });
-});
-});
 
 
 // Route File

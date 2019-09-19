@@ -40,6 +40,11 @@ router.get('/registerNewuser',  function(req, res){
   let company = new Company();
   company.name = 'Recipe Vault';
 
+  if (!fs.existsSync('./uploads/'+'Recipe Vault')){
+    fs.mkdirSync('./uploads/'+'Recipe Vault');
+    
+}
+
   company.save(function(err){
     if(err){
         console.log(err);
@@ -206,16 +211,6 @@ router.post('/register', [
     check('email').isEmail(),
     // password must be at least 5 chars long
     check('password').isLength({ min: 8 }),
-
-    //check('password2').equals('password')
-    check('email').custom(value => {
-        return User.findByEmail(value).then(user => {
-          if (user) {
-              console.log(user);
-            return req.flash(('E-mail already in use') );
-          }
-        });
-      }),
 ], (req, res) => {
 
 

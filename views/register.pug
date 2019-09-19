@@ -1,7 +1,7 @@
 doctype html
 html(lang='en')
   head
-    title Recipe Book
+    title Recipe Vault
     meta(charset='UTF-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     // ===============================================================================================
@@ -34,7 +34,7 @@ html(lang='en')
             != messages('message', locals)
             span.login100-form-title.p-b-43
               | Register
-            .wrap-input100.validate-input(data-validate='Valid email is required: ex@abc.xyz')
+            .wrap-input100.validate-input(data-validate='Valid name is required: John, Nick ')
               input.input100(type='text', name='name')
               span.focus-input100
               span.label-input100 Name
@@ -42,7 +42,7 @@ html(lang='en')
               input.input100(type='text', name='email')
               span.focus-input100
               span.label-input100 Email  
-            .wrap-input100.validate-input(data-validate='Password is required')
+            .wrap-input100.validate-input(data-validate='Company name is required')
               input.input100(type='text', name='company')
               span.focus-input100
               span.label-input100 Company

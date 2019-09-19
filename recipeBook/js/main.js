@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     $('.recipe-delete').on('click', function(e){
         $target = $(e.target);
@@ -82,18 +81,22 @@ $(document).ready(function(){
 
     });
 });
+
+
 $(document).ready(function(){
-    $('.directions-delete').on('click', function(e){
-var input = document.getElementById('input');
-var picker = new Picker(input, {
-  format: 'YYYY/MM/DD HH:mm',
+    $('.print').on('click', function(){
+        $('#recipe').printThis({
+            importCSS: true,
+            loadCSS: ["/css/styles.css", "/css/animate.min.css", "/css/font-awesome.min.css", "/css/bootstrap.min.css", "/css/reset.css"],
+        });
+   
+    });
 });
-});
-});
+
 
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
-  });
+});
 
 (function ($) {
     "use strict";

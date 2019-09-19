@@ -8,6 +8,10 @@ let User = require('../models/user');
 
 let Company = require('../models/company');
 
+//const csv = require('csv-parser');
+const fs = require('fs');
+const csv = require('fast-csv');
+
 
 exports.deCodeed = function (token) {
     
@@ -24,6 +28,34 @@ exports.checkValue = function (value1, value2) {
     }
     return false;
       
+};
+
+exports.ReadCSV = function () {
+    //var a = row
+
+    const fileRows = [];
+    // open uploaded file
+    csv.fromPath('data.csv')
+    .on("data", function (data) {
+        fileRows.push(data); // push each row
+    })
+    .on("end", function () {
+        console.log(fileRows)
+        //fs.unlinkSync(req.file.path);   // remove temp file
+        //process "fileRows" and respond
+    })
+    // fs.createReadStream('data.csv')
+    // .pipe(csv())
+    // .on('data', (row) => {
+    //     var a = row;
+    //     console.log(row);
+    //     return a;
+    // })
+    // .on('end', () => {
+    //     console.log('CSV file successfully processed');
+    // });
+     //return a; 
+    
 };
 
 exports.checkArray = function (sites, checkArray) {

@@ -2,7 +2,7 @@ extends layout
 
 block content
   section#recipe
-      .container
+      .container(id='fullPage')
         .row
           // Title
           .col-12
@@ -89,7 +89,9 @@ block content
           .col-12.text-center
             a(href='/recipes')
               i.fa.fa-backward(aria-hidden='true')
-              |             Go to back to recipes.
+              |             Go to back to recipes.      
+              h4
+              a.btn.btn-danger.print Print this page 
   #addIngredients.modal.fade(tabindex='-1', role='dialog', aria-labelledby='addIngredientsLabel', aria-hidden='true')
       .modal-dialog(role='document')
           .modal-content
