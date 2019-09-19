@@ -93,10 +93,9 @@ router.post('/add', upload.single('image'),[
   // Finds the validation errors in this request and wraps them in an object with handy functions
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    req.flash('danger', 'Please try again' ,{errors:errors.mapped()} );
+    req.flash('danger', 'Please try again' ,errors.mapped() );
     res.redirect('/');
-    console.log(req.file);
-   return { errors: errors.withMessage()};
+   return req.flash('danger',  errors.withMessage());
   }
   let recipe = new Recipe();
     recipe.title = req.body.title;
